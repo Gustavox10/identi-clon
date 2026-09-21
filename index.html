@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taringa! - Inteligencia Colectiva</title>
+    <title>IDENTI - Tus Descargas Sin Límites</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons CDN -->
@@ -61,6 +61,9 @@
                 <span class="text-xs bg-yellow-500 text-black px-1.5 py-0.5 rounded font-bold">Rango: User</span>
                 <button onclick="logout()" class="text-red-400 hover:underline text-xs"><i class="fas fa-power-off"></i> Salir</button>
             </div>
+        </div>
+    </nav>
+
     <!-- Classic IDENTI Dark Blue Header Banner -->
     <header class="identi-header-bg text-white py-6 px-4 shadow-lg border-b-4 border-blue-950 relative overflow-hidden">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
@@ -134,16 +137,16 @@
                 <!-- Notice Banner -->
                 <div class="p-2 bg-amber-50 border-b border-amber-200 text-xs space-y-1">
                     <div class="flex items-center text-red-700 font-bold">
-                        <i class="fas fa-bullhorn mr-1.5"></i> [Anuncio] Actualización de Servidores 2026
+                        <i class="fas fa-bullhorn mr-1.5"></i> [Anuncio] Base de Datos en la Nube Activa
                     </div>
                     <div class="text-gray-600 text-3xs pl-5">
-                        Recordatorio: Revisa las normas de la comunidad antes de publicar enlaces.
+                        Tus publicaciones y comentarios ahora se guardan automáticamente.
                     </div>
                 </div>
 
                 <!-- Posts List Container -->
                 <div id="postsList" class="divide-y divide-gray-100 text-xs max-h-[700px] overflow-y-auto">
-                    <!-- Dynamic posts injected here -->
+                    <div class="p-4 text-center text-gray-500">Cargando publicaciones...</div>
                 </div>
             </div>
         </section>
@@ -164,15 +167,15 @@
                         <span class="text-gray-500 text-3xs uppercase font-semibold">Usuarios Online</span>
                     </div>
                     <div class="bg-blue-50 p-2 rounded border border-blue-100">
-                        <span class="text-blue-800 font-bold block text-sm" id="statPosts">695,136</span>
+                        <span class="text-blue-800 font-bold block text-sm" id="statPosts">0</span>
                         <span class="text-gray-500 text-3xs uppercase font-semibold">Posts Publicados</span>
                     </div>
                     <div class="bg-blue-50 p-2 rounded border border-blue-100">
-                        <span class="text-blue-800 font-bold block text-sm" id="statMembers">549,421</span>
+                        <span class="text-blue-800 font-bold block text-sm" id="statMembers">0</span>
                         <span class="text-gray-500 text-3xs uppercase font-semibold">Miembros</span>
                     </div>
                     <div class="bg-blue-50 p-2 rounded border border-blue-100">
-                        <span class="text-blue-800 font-bold block text-sm" id="statComments">6,148,762</span>
+                        <span class="text-blue-800 font-bold block text-sm" id="statComments">0</span>
                         <span class="text-gray-500 text-3xs uppercase font-semibold">Comentarios</span>
                     </div>
                 </div>
@@ -187,7 +190,7 @@
                     <span class="text-3xs text-gray-500 font-normal">En vivo</span>
                 </div>
                 <div id="commentsList" class="divide-y divide-gray-100 text-xs">
-                    <!-- Dynamic comments injected here -->
+                    <div class="p-3 text-center text-gray-400">Sin comentarios recientes</div>
                 </div>
             </div>
         </section>
@@ -205,27 +208,21 @@
                 <div class="p-2 text-xs font-semibold uppercase tracking-wider space-y-1">
                     <a href="#" onclick="filterByCategory('Películas')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
                         <span><i class="fas fa-film mr-2 text-gray-400"></i>Películas en Español</span>
-                        <span class="text-gray-400 text-3xs">(42k)</span>
                     </a>
                     <a href="#" onclick="filterByCategory('Juegos PC')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
                         <span><i class="fas fa-gamepad mr-2 text-gray-400"></i>Juegos de PC</span>
-                        <span class="text-gray-400 text-3xs">(31k)</span>
                     </a>
                     <a href="#" onclick="filterByCategory('Series')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
                         <span><i class="fas fa-tv mr-2 text-gray-400"></i>Series en Español</span>
-                        <span class="text-gray-400 text-3xs">(18k)</span>
                     </a>
                     <a href="#" onclick="filterByCategory('Software')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
                         <span><i class="fas fa-desktop mr-2 text-gray-400"></i>Software | Programas</span>
-                        <span class="text-gray-400 text-3xs">(12k)</span>
                     </a>
                     <a href="#" onclick="filterByCategory('Anime')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
                         <span><i class="fas fa-dragon mr-2 text-gray-400"></i>Anime | Manga</span>
-                        <span class="text-gray-400 text-3xs">(9k)</span>
                     </a>
                     <a href="#" onclick="filterByCategory('Música')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded flex items-center justify-between">
                         <span><i class="fas fa-music mr-2 text-gray-400"></i>Discos de Música</span>
-                        <span class="text-gray-400 text-3xs">(15k)</span>
                     </a>
                 </div>
             </div>
@@ -235,13 +232,13 @@
                 <div class="font-bold uppercase text-yellow-400 mb-1 flex items-center">
                     <i class="fas fa-trophy mr-1.5"></i> Stat Semanal
                 </div>
-                <p class="text-gray-200 text-3xs mb-2">Usuario destacado con más puntos esta semana:</p>
+                <p class="text-gray-200 text-3xs mb-2">Comunidad activa e ilimitada:</p>
                 <div class="flex items-center space-x-2 bg-blue-950/80 p-2 rounded border border-blue-800">
                     <div class="w-8 h-8 rounded-full bg-yellow-500 text-black flex items-center justify-center font-bold text-sm">
                         #1
                     </div>
                     <div>
-                        <div class="font-bold text-white">Geonemesis</div>
+                        <div class="font-bold text-white">Identi User</div>
                         <div class="text-yellow-300 text-3xs">+1,420 Puntos</div>
                     </div>
                 </div>
@@ -277,15 +274,7 @@
                 </div>
 
                 <!-- Content Area -->
-                <div id="modalPostContent" class="text-gray-800 space-y-2 leading-relaxed bg-gray-50 p-3 rounded border border-gray-200 min-h-[100px]">
-                </div>
-
-                <!-- Download Link Box -->
-                <div class="bg-blue-50 border border-blue-200 p-3 rounded text-center">
-                    <p class="font-bold text-blue-900 mb-1"><i class="fas fa-download mr-1"></i> Enlaces de Descarga / Contenido</p>
-                    <div class="inline-block bg-white px-3 py-1.5 border border-blue-300 rounded text-blue-600 font-mono text-3xs">
-                        https://taringa.net/file/download_pack_2026_x86_x64
-                    </div>
+                <div id="modalPostContent" class="text-gray-800 space-y-2 leading-relaxed bg-gray-50 p-3 rounded border border-gray-200 min-h-[100px] whitespace-pre-wrap">
                 </div>
 
                 <!-- Comments Section in Modal -->
@@ -332,12 +321,12 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block font-bold text-gray-700 mb-1">Contenido / Enlaces</label>
-                    <textarea id="postContentInput" rows="4" required placeholder="Escribe detalles del post o pega tus links..." class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+                    <label class="block font-bold text-gray-700 mb-1">Contenido / Enlaces de Descarga</label>
+                    <textarea id="postContentInput" rows="4" required placeholder="Escribe detalles del post o pega tus links de descarga..." class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeModal('createPostModal')" class="px-3 py-1.5 bg-gray-200 text-gray-700 rounded font-bold">Cancelar</button>
-                    <button type="submit" class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded font-bold">Publicar Post</button>
+                    <button type="submit" id="btnSubmitPost" class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded font-bold">Publicar Post</button>
                 </div>
             </form>
         </div>
@@ -352,8 +341,8 @@
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block font-bold text-gray-700 mb-1">Usuario</label>
-                    <input type="text" id="loginUser" required placeholder="Tu nick" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    <label class="block font-bold text-gray-700 mb-1">Usuario / Email</label>
+                    <input type="text" id="loginUser" required placeholder="Tu nick o correo" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
                 </div>
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">Contraseña</label>
@@ -404,140 +393,126 @@
         </div>
     </footer>
 
-    <!-- Application Logic Script -->
+    <!-- Supabase Client & Application Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // Supabase Initialization
+        const SUPABASE_URL = 'https://fueuwjkccdbglmuwvkwt.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_1BeksyLxSiPR3moMcoUDPw_e3NjCnSX';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         // State Management
-        let currentUser = null;
+        let currentUser = localStorage.getItem('identi_user') || null;
         let activePostId = null;
         let selectedCategory = 'ALL';
-
-        // Initial Seed Data
-        let posts = [
-            {
-                id: 1,
-                title: "[Leer] Actualización de Hosts y Servidores 2026",
-                category: "Software",
-                author: "Admin",
-                date: "Hoy, 14:20",
-                upvotes: 342,
-                comments: 45,
-                content: "Hemos actualizado todos los servidores espejo para garantizar descargas directas a máxima velocidad. Reporta cualquier enlace caído.",
-                isNotice: true
-            },
-            {
-                id: 2,
-                title: "Tú+Yo - Los dos contra todos (2026) Latino",
-                category: "Películas",
-                author: "TijuanaWeb",
-                date: "Hace 15 mins",
-                upvotes: 18,
-                comments: 3,
-                content: "Excelente calidad HD Web-DL 1080p con audio Latino AC3 5.1. Sin acortadores molestos."
-            },
-            {
-                id: 3,
-                title: "El final de la Calle Oak (2026) Latino",
-                category: "Películas",
-                author: "SebaDJ",
-                date: "Hace 40 mins",
-                upvotes: 25,
-                comments: 7,
-                content: "Película de suspenso recién estrenada en plataformas digitales. Incluye subtítulos en español."
-            },
-            {
-                id: 4,
-                title: "Las Mejores Películas (2026) Latino Online 4K",
-                category: "Películas",
-                author: "Lufanis",
-                date: "Hace 1 hora",
-                upvotes: 42,
-                comments: 12,
-                content: "Pack completo con servidores Mega, Mediafire y 1Fichier. Disfrútenlo!"
-            },
-            {
-                id: 5,
-                title: "Cyberpunk Rogue Legacy - PC Game ISO (Multilenguaje)",
-                category: "Juegos PC",
-                author: "GamerX",
-                date: "Hace 2 horas",
-                upvotes: 89,
-                comments: 31,
-                content: "Juego completo autoinstalable. Incluye todas las expansiones y actualizaciones lanzadas hasta la fecha."
-            },
-            {
-                id: 6,
-                title: "Dallos (1983) 2160p (Japonés) (Sub-Español)",
-                category: "Anime",
-                author: "OtakuKing",
-                date: "Hace 3 horas",
-                upvotes: 14,
-                comments: 2,
-                content: "Edición remasterizada en Ultra HD de la clásica OVA sci-fi."
-            }
-        ];
-
-        let commentsData = [
-            { id: 101, postId: 2, user: "Lufanis", text: "1979 Alien [SDR] link verificado funcionando perfectamente!", time: "Hace 5m" },
-            { id: 102, postId: 3, user: "Geonemesis", text: "Excelente aporte como siempre!", time: "Hace 12m" },
-            { id: 103, postId: 4, user: "SebaDJ", text: "Subiendo nuevos espejos de descarga...", time: "Hace 18m" },
-            { id: 104, postId: 2, user: "gusty072", text: "Los Pericos - Discografía completa [320 kbps]", time: "Hace 25m" },
-            { id: 105, postId: 5, user: "tijuanaweb", text: "Probado en Windows 11 y funciona perfecto", time: "Hace 30m" }
-        ];
+        let posts = [];
+        let commentsData = [];
 
         // Init App
         window.onload = function() {
-            renderPosts();
-            renderRecentComments();
+            if (currentUser) updateAuthUI();
+            fetchPosts();
+            fetchRecentComments();
+            fetchStats();
         };
 
-        // Render Posts List
-        function renderPosts(filtered = null) {
-            const container = document.getElementById('postsList');
-            const dataToRender = filtered || posts;
+        // Fetch Posts from Supabase
+        async function fetchPosts(category = 'ALL', search = '') {
+            let query = _supabase.from('posts').select('*').order('created_at', { ascending: false });
 
-            if (dataToRender.length === 0) {
-                container.innerHTML = `<div class="p-4 text-center text-gray-500">No se encontraron posts en esta categoría.</div>`;
+            if (category !== 'ALL') {
+                query = query.eq('category', category);
+            }
+            if (search) {
+                query = query.ilike('title', `%${search}%`);
+            }
+
+            const { data, error } = await query;
+            if (error) {
+                console.error("Error cargando posts:", error);
+                document.getElementById('postsList').innerHTML = `<div class="p-4 text-center text-red-500">Error al cargar publicaciones.</div>`;
                 return;
             }
 
-            container.innerHTML = dataToRender.map(post => `
-                <div onclick="openPostView(${post.id})" class="p-2.5 hover:bg-blue-50 cursor-pointer transition flex items-start justify-between group ${post.isNotice ? 'bg-amber-50/60' : ''}">
+            posts = data || [];
+            renderPosts();
+        }
+
+        // Render Posts List
+        function renderPosts() {
+            const container = document.getElementById('postsList');
+
+            if (posts.length === 0) {
+                container.innerHTML = `<div class="p-4 text-center text-gray-500">No hay publicaciones disponibles. ¡Sé el primero en publicar!</div>`;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <div onclick="openPostView(${post.id})" class="p-2.5 hover:bg-blue-50 cursor-pointer transition flex items-start justify-between group">
                     <div class="flex items-center space-x-2.5 overflow-hidden">
                         <i class="${getCategoryIcon(post.category)} text-blue-600 text-sm flex-shrink-0"></i>
                         <div class="truncate">
-                            <span class="font-bold ${post.isNotice ? 'text-red-700' : 'text-blue-900 group-hover:underline'}">
+                            <span class="font-bold text-blue-900 group-hover:underline">
                                 ${post.title}
                             </span>
                             <div class="text-3xs text-gray-500 mt-0.5 flex space-x-2">
                                 <span class="font-semibold text-gray-700">${post.category}</span>
                                 <span>•</span>
-                                <span>por ${post.author}</span>
+                                <span>por ${post.author || 'Anónimo'}</span>
                                 <span>•</span>
-                                <span>${post.date}</span>
+                                <span>${new Date(post.created_at).toLocaleDateString()}</span>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center space-x-2 ml-2 flex-shrink-0 text-3xs text-gray-500">
                         <span class="bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">
-                            <i class="fas fa-thumbs-up text-green-600 mr-0.5"></i>${post.upvotes}
+                            <i class="fas fa-thumbs-up text-green-600 mr-0.5"></i>${post.upvotes || 0}
                         </span>
                         <span class="bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">
-                            <i class="fas fa-comment text-blue-500 mr-0.5"></i>${post.comments}
+                            <i class="fas fa-comment text-blue-500 mr-0.5"></i>${post.comments || 0}
                         </span>
                     </div>
                 </div>
             `).join('');
         }
 
+        // Fetch Recent Comments
+        async function fetchRecentComments() {
+            const { data, error } = await _supabase
+                .from('comments')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(7);
+
+            if (!error && data) {
+                commentsData = data;
+                renderRecentComments();
+            }
+        }
+
         // Render Recent Comments Sidebar
         function renderRecentComments() {
             const container = document.getElementById('commentsList');
-            container.innerHTML = commentsData.slice(0, 7).map(c => `
+            if (commentsData.length === 0) {
+                container.innerHTML = `<div class="p-3 text-center text-gray-400">Sin comentarios aún</div>`;
+                return;
+            }
+            container.innerHTML = commentsData.map(c => `
                 <div class="p-2 hover:bg-gray-50">
-                    <div class="font-bold text-blue-800 text-2xs">${c.user}</div>
+                    <div class="font-bold text-blue-800 text-2xs">${c.user || 'Anónimo'}</div>
                     <div class="text-gray-600 text-3xs truncate">${c.text}</div>
                 </div>
             `).join('');
+        }
+
+        // Fetch General Stats
+        async function fetchStats() {
+            const { count: postCount } = await _supabase.from('posts').select('*', { count: 'exact', head: true });
+            const { count: commentCount } = await _supabase.from('comments').select('*', { count: 'exact', head: true });
+            
+            if (postCount !== null) document.getElementById('statPosts').innerText = postCount.toLocaleString();
+            if (commentCount !== null) document.getElementById('statComments').innerText = commentCount.toLocaleString();
+            document.getElementById('statMembers').innerText = Math.max(10, postCount * 2).toLocaleString();
         }
 
         // Category Icon Helper
@@ -557,23 +532,13 @@
         function filterByCategory(cat) {
             selectedCategory = cat;
             document.getElementById('categorySelectFilter').value = cat;
-            if (cat === 'ALL') {
-                renderPosts();
-            } else {
-                const filtered = posts.filter(p => p.category.toLowerCase() === cat.toLowerCase());
-                renderPosts(filtered);
-            }
+            fetchPosts(cat);
         }
 
         // Search Input Filter
         function handleSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = posts.filter(p => 
-                p.title.toLowerCase().includes(query) || 
-                p.category.toLowerCase().includes(query) ||
-                p.author.toLowerCase().includes(query)
-            );
-            renderPosts(filtered);
+            const query = document.getElementById('searchInput').value.trim();
+            fetchPosts(selectedCategory, query);
         }
 
         function resetFilters() {
@@ -582,27 +547,32 @@
         }
 
         // Open Post Detail Modal
-        function openPostView(id) {
+        async function openPostView(id) {
             const post = posts.find(p => p.id === id);
             if (!post) return;
 
             activePostId = id;
             document.getElementById('modalCategoryBadge').innerText = post.category;
             document.getElementById('modalPostTitle').innerText = post.title;
-            document.getElementById('modalPostAuthor').innerText = post.author;
-            document.getElementById('modalPostDate').innerText = post.date;
-            document.getElementById('modalUpvotesCount').innerText = post.upvotes;
+            document.getElementById('modalPostAuthor').innerText = post.author || 'Anónimo';
+            document.getElementById('modalPostDate').innerText = new Date(post.created_at).toLocaleString();
+            document.getElementById('modalUpvotesCount').innerText = post.upvotes || 0;
             document.getElementById('modalPostContent').innerText = post.content;
 
-            // Render post-specific comments
-            const pComments = commentsData.filter(c => c.postId === id);
+            // Load Post Comments
+            const { data: comments, error } = await _supabase
+                .from('comments')
+                .select('*')
+                .eq('post_id', id)
+                .order('created_at', { ascending: true });
+
             const commentsContainer = document.getElementById('modalCommentsList');
-            if (pComments.length === 0) {
+            if (error || !comments || comments.length === 0) {
                 commentsContainer.innerHTML = `<div class="text-gray-400 italic text-3xs">Aún no hay comentarios en este post. Sé el primero.</div>`;
             } else {
-                commentsContainer.innerHTML = pComments.map(c => `
+                commentsContainer.innerHTML = comments.map(c => `
                     <div class="bg-gray-100 p-2 rounded border border-gray-200">
-                        <div class="font-bold text-blue-900 text-3xs">${c.user} <span class="text-gray-400 font-normal ml-1">${c.time}</span></div>
+                        <div class="font-bold text-blue-900 text-3xs">${c.user} <span class="text-gray-400 font-normal ml-1">${new Date(c.created_at).toLocaleTimeString()}</span></div>
                         <div class="text-gray-700 text-xs mt-0.5">${c.text}</div>
                     </div>
                 `).join('');
@@ -612,49 +582,55 @@
         }
 
         // Upvote Post
-        function upvoteCurrentPost() {
+        async function upvoteCurrentPost() {
             if (!activePostId) return;
             const post = posts.find(p => p.id === activePostId);
             if (post) {
-                post.upvotes++;
-                document.getElementById('modalUpvotesCount').innerText = post.upvotes;
-                renderPosts();
+                const newUpvotes = (post.upvotes || 0) + 1;
+                post.upvotes = newUpvotes;
+                document.getElementById('modalUpvotesCount').innerText = newUpvotes;
+
+                await _supabase
+                    .from('posts')
+                    .update({ upvotes: newUpvotes })
+                    .eq('id', activePostId);
+
+                fetchPosts(selectedCategory);
             }
         }
 
         // Submit Comment
-        function submitComment() {
+        async function submitComment() {
             const input = document.getElementById('newCommentInput');
             const text = input.value.trim();
             if (!text) return;
 
             const username = currentUser ? currentUser : 'Taringuero_' + Math.floor(Math.random() * 900 + 100);
 
-            const newComment = {
-                id: Date.now(),
-                postId: activePostId,
-                user: username,
-                text: text,
-                time: 'Hace un momento'
-            };
+            const { error } = await _supabase
+                .from('comments')
+                .insert([{ post_id: activePostId, user: username, text: text }]);
 
-            commentsData.unshift(newComment);
-            
-            // Update comments count on post
+            if (error) {
+                alert("Error al enviar el comentario");
+                return;
+            }
+
+            // Increment comments count on post
             const post = posts.find(p => p.id === activePostId);
-            if (post) post.comments++;
-
-            // Update stats
-            const statComms = document.getElementById('statComments');
-            statComms.innerText = (parseInt(statComms.innerText.replace(/,/g, '')) + 1).toLocaleString();
+            if (post) {
+                const newCount = (post.comments || 0) + 1;
+                await _supabase.from('posts').update({ comments: newCount }).eq('id', activePostId);
+            }
 
             input.value = '';
             openPostView(activePostId);
-            renderRecentComments();
-            renderPosts();
+            fetchRecentComments();
+            fetchPosts(selectedCategory);
+            fetchStats();
         }
 
-        // Create Post Modal Handler
+        // Create Post Handler
         function openCreatePostModal() {
             if (!currentUser) {
                 alert("Debes iniciar sesión para publicar un post.");
@@ -664,43 +640,52 @@
             openModal('createPostModal');
         }
 
-        function handleCreatePost(e) {
+        async function handleCreatePost(e) {
             e.preventDefault();
+            const btn = document.getElementById('btnSubmitPost');
+            btn.disabled = true;
+            btn.innerText = "Publicando...";
+
             const title = document.getElementById('postTitleInput').value;
             const category = document.getElementById('postCategoryInput').value;
             const content = document.getElementById('postContentInput').value;
 
-            const newPost = {
-                id: posts.length + 1,
-                title: title,
-                category: category,
-                author: currentUser,
-                date: "Hace un momento",
-                upvotes: 1,
-                comments: 0,
-                content: content
-            };
+            const { error } = await _supabase
+                .from('posts')
+                .insert([
+                    {
+                        title: title,
+                        category: category,
+                        content: content,
+                        author: currentUser,
+                        upvotes: 1,
+                        comments: 0
+                    }
+                ]);
 
-            posts.unshift(newPost);
-            
-            // Update Stat Counter
-            const statPosts = document.getElementById('statPosts');
-            statPosts.innerText = (parseInt(statPosts.innerText.replace(/,/g, '')) + 1).toLocaleString();
+            btn.disabled = false;
+            btn.innerText = "Publicar Post";
 
-            renderPosts();
+            if (error) {
+                alert("Error al guardar el post: " + error.message);
+                return;
+            }
+
             closeModal('createPostModal');
-            
-            // Reset form
             document.getElementById('postTitleInput').value = '';
             document.getElementById('postContentInput').value = '';
+
+            fetchPosts(selectedCategory);
+            fetchStats();
         }
 
-        // Auth Logic Mock
+        // Auth Logic
         function handleLogin(e) {
             e.preventDefault();
-            const user = document.getElementById('loginUser').value;
+            const user = document.getElementById('loginUser').value.trim();
             if (user) {
                 currentUser = user;
+                localStorage.setItem('identi_user', user);
                 updateAuthUI();
                 closeModal('loginModal');
             }
@@ -708,14 +693,10 @@
 
         function handleRegister(e) {
             e.preventDefault();
-            const user = document.getElementById('regUser').value;
+            const user = document.getElementById('regUser').value.trim();
             if (user) {
                 currentUser = user;
-                
-                // Update Members Stat
-                const statMem = document.getElementById('statMembers');
-                statMem.innerText = (parseInt(statMem.innerText.replace(/,/g, '')) + 1).toLocaleString();
-
+                localStorage.setItem('identi_user', user);
                 updateAuthUI();
                 closeModal('registerModal');
             }
@@ -723,6 +704,7 @@
 
         function logout() {
             currentUser = null;
+            localStorage.removeItem('identi_user');
             updateAuthUI();
         }
 
@@ -751,8 +733,8 @@
         }
 
         function showTops() {
-            const sorted = [...posts].sort((a, b) => b.upvotes - a.upvotes);
-            renderPosts(sorted);
+            posts.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
+            renderPosts();
         }
     </script>
 </body>
