@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom styling for retro forum aesthetics -->
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -37,6 +36,13 @@
             top: 0;
             z-index: 30;
         }
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -58,13 +64,13 @@
             </div>
             <div class="hidden items-center space-x-3" id="userNavProfile">
                 <span class="text-white font-bold"><i class="fas fa-user text-blue-400 mr-1"></i><span id="usernameDisplay">Usuario</span></span>
-                <span class="text-xs bg-yellow-500 text-black px-1.5 py-0.5 rounded font-bold">Rango: User</span>
+                <span class="text-xs bg-yellow-500 text-black px-1.5 py-0.5 rounded font-bold" id="userRankBadge">Rango: User</span>
                 <button onclick="logout()" class="text-red-400 hover:underline text-xs"><i class="fas fa-power-off"></i> Salir</button>
             </div>
         </div>
     </nav>
 
-    <!-- Classic IDENTI Dark Blue Header Banner -->
+    <!-- Header Banner -->
     <header class="identi-header-bg text-white py-6 px-4 shadow-lg border-b-4 border-blue-950 relative overflow-hidden">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
             <div class="flex items-center space-x-3">
@@ -77,7 +83,6 @@
                     </p>
                 </div>
             </div>
-            <!-- Search Bar in Banner -->
             <div class="mt-4 md:mt-0 flex items-center space-x-2 w-full md:w-80">
                 <div class="relative w-full">
                     <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Buscar posts, juegos, películas..." 
@@ -95,9 +100,6 @@
                 <button onclick="resetFilters()" class="py-2.5 px-3 hover:bg-gray-100 border-b-2 border-blue-600 text-blue-700 flex items-center">
                     <i class="fas fa-home mr-1.5 text-blue-500"></i>Posts
                 </button>
-                <button onclick="alert('Sección Comunidades próximamente')" class="py-2.5 px-3 hover:bg-gray-100 flex items-center">
-                    <i class="fas fa-comments mr-1.5 text-green-600"></i>Comunidades
-                </button>
                 <button onclick="showTops()" class="py-2.5 px-3 hover:bg-gray-100 flex items-center">
                     <i class="fas fa-layer-group mr-1.5 text-yellow-600"></i>Tops
                 </button>
@@ -113,9 +115,8 @@
         </div>
     </div>
 
-    <!-- Main Content Grid -->
+    <!-- Main Content -->
     <main class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 grid grid-cols-1 md:grid-cols-12 gap-4">
-
         <!-- LEFT COLUMN: Ultimos Posts -->
         <section class="md:col-span-6 lg:col-span-5 flex flex-col space-y-3">
             <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden">
@@ -124,7 +125,7 @@
                         <i class="fas fa-list-alt mr-2 text-blue-600"></i>Últimos Posts
                     </h2>
                     <select id="categorySelectFilter" onchange="filterByCategory(this.value)" class="text-xs border border-gray-300 rounded px-1.5 py-0.5 bg-white text-gray-700 focus:outline-none">
-                        <option value="ALL">Ver categorías (Todas)</option>
+                        <option value="ALL">Todas las categorías</option>
                         <option value="Películas">Películas</option>
                         <option value="Series">Series</option>
                         <option value="Juegos PC">Juegos PC</option>
@@ -134,17 +135,6 @@
                     </select>
                 </div>
                 
-                <!-- Notice Banner -->
-                <div class="p-2 bg-amber-50 border-b border-amber-200 text-xs space-y-1">
-                    <div class="flex items-center text-red-700 font-bold">
-                        <i class="fas fa-bullhorn mr-1.5"></i> [Anuncio] Base de Datos en la Nube Activa
-                    </div>
-                    <div class="text-gray-600 text-3xs pl-5">
-                        Tus publicaciones y comentarios ahora se guardan automáticamente.
-                    </div>
-                </div>
-
-                <!-- Posts List Container -->
                 <div id="postsList" class="divide-y divide-gray-100 text-xs max-h-[700px] overflow-y-auto">
                     <div class="p-4 text-center text-gray-500">Cargando publicaciones...</div>
                 </div>
@@ -153,8 +143,6 @@
 
         <!-- MIDDLE COLUMN: Statistics & Comments -->
         <section class="md:col-span-6 lg:col-span-4 flex flex-col space-y-3">
-            
-            <!-- Statistics Box -->
             <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden">
                 <div class="forum-header-bar px-3 py-2 border-b border-forum">
                     <h3 class="font-bold text-blue-900 text-sm flex items-center">
@@ -170,24 +158,14 @@
                         <span class="text-blue-800 font-bold block text-sm" id="statPosts">0</span>
                         <span class="text-gray-500 text-3xs uppercase font-semibold">Posts Publicados</span>
                     </div>
-                    <div class="bg-blue-50 p-2 rounded border border-blue-100">
-                        <span class="text-blue-800 font-bold block text-sm" id="statMembers">0</span>
-                        <span class="text-gray-500 text-3xs uppercase font-semibold">Miembros</span>
-                    </div>
-                    <div class="bg-blue-50 p-2 rounded border border-blue-100">
-                        <span class="text-blue-800 font-bold block text-sm" id="statComments">0</span>
-                        <span class="text-gray-500 text-3xs uppercase font-semibold">Comentarios</span>
-                    </div>
                 </div>
             </div>
 
-            <!-- Recent Comments Box -->
             <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden flex-grow">
                 <div class="forum-header-bar px-3 py-2 border-b border-forum flex justify-between items-center">
                     <h3 class="font-bold text-blue-900 text-sm flex items-center">
                         <i class="fas fa-comments mr-2 text-blue-600"></i>Últimos Comentarios
                     </h3>
-                    <span class="text-3xs text-gray-500 font-normal">En vivo</span>
                 </div>
                 <div id="commentsList" class="divide-y divide-gray-100 text-xs">
                     <div class="p-3 text-center text-gray-400">Sin comentarios recientes</div>
@@ -195,10 +173,8 @@
             </div>
         </section>
 
-        <!-- RIGHT SIDEBAR: Categories & Top -->
+        <!-- RIGHT SIDEBAR -->
         <section class="md:col-span-12 lg:col-span-3 flex flex-col space-y-3">
-            
-            <!-- Popular Categories Box -->
             <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden">
                 <div class="forum-header-bar px-3 py-2 border-b border-forum">
                     <h3 class="font-bold text-blue-900 text-sm flex items-center">
@@ -206,41 +182,10 @@
                     </h3>
                 </div>
                 <div class="p-2 text-xs font-semibold uppercase tracking-wider space-y-1">
-                    <a href="#" onclick="filterByCategory('Películas')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
-                        <span><i class="fas fa-film mr-2 text-gray-400"></i>Películas en Español</span>
-                    </a>
-                    <a href="#" onclick="filterByCategory('Juegos PC')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
-                        <span><i class="fas fa-gamepad mr-2 text-gray-400"></i>Juegos de PC</span>
-                    </a>
-                    <a href="#" onclick="filterByCategory('Series')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
-                        <span><i class="fas fa-tv mr-2 text-gray-400"></i>Series en Español</span>
-                    </a>
-                    <a href="#" onclick="filterByCategory('Software')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
-                        <span><i class="fas fa-desktop mr-2 text-gray-400"></i>Software | Programas</span>
-                    </a>
-                    <a href="#" onclick="filterByCategory('Anime')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded border-b border-gray-100 flex items-center justify-between">
-                        <span><i class="fas fa-dragon mr-2 text-gray-400"></i>Anime | Manga</span>
-                    </a>
-                    <a href="#" onclick="filterByCategory('Música')" class="block px-2 py-1.5 hover:bg-blue-50 hover:text-blue-700 text-blue-900 rounded flex items-center justify-between">
-                        <span><i class="fas fa-music mr-2 text-gray-400"></i>Discos de Música</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Top Identi Widget -->
-            <div class="bg-gradient-to-br from-blue-900 to-blue-950 text-white p-3 rounded border border-blue-900 box-shadow-retro text-xs">
-                <div class="font-bold uppercase text-yellow-400 mb-1 flex items-center">
-                    <i class="fas fa-trophy mr-1.5"></i> Stat Semanal
-                </div>
-                <p class="text-gray-200 text-3xs mb-2">Comunidad activa e ilimitada:</p>
-                <div class="flex items-center space-x-2 bg-blue-950/80 p-2 rounded border border-blue-800">
-                    <div class="w-8 h-8 rounded-full bg-yellow-500 text-black flex items-center justify-center font-bold text-sm">
-                        #1
-                    </div>
-                    <div>
-                        <div class="font-bold text-white">Identi User</div>
-                        <div class="text-yellow-300 text-3xs">+1,420 Puntos</div>
-                    </div>
+                    <a href="#" onclick="filterByCategory('Películas')" class="block px-2 py-1.5 hover:bg-blue-50 text-blue-900 rounded">Películas</a>
+                    <a href="#" onclick="filterByCategory('Juegos PC')" class="block px-2 py-1.5 hover:bg-blue-50 text-blue-900 rounded">Juegos de PC</a>
+                    <a href="#" onclick="filterByCategory('Series')" class="block px-2 py-1.5 hover:bg-blue-50 text-blue-900 rounded">Series</a>
+                    <a href="#" onclick="filterByCategory('Software')" class="block px-2 py-1.5 hover:bg-blue-50 text-blue-900 rounded">Software</a>
                 </div>
             </div>
         </section>
@@ -249,14 +194,19 @@
     <!-- POST DETAILS MODAL -->
     <div id="postViewModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
         <div class="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-gray-400">
-            <!-- Modal Header -->
             <div class="forum-header-bar px-4 py-3 border-b border-gray-300 flex justify-between items-center">
                 <span id="modalCategoryBadge" class="bg-blue-800 text-white text-3xs font-bold px-2 py-0.5 rounded uppercase">Categoría</span>
                 <button onclick="closeModal('postViewModal')" class="text-gray-500 hover:text-gray-800 text-lg font-bold">&times;</button>
             </div>
-            <!-- Modal Body -->
             <div class="p-4 overflow-y-auto space-y-4 text-xs">
-                <h2 id="modalPostTitle" class="text-lg font-bold text-blue-900"></h2>
+                <div class="flex justify-between items-start">
+                    <h2 id="modalPostTitle" class="text-lg font-bold text-blue-900"></h2>
+                    <!-- Action Buttons (Edit / Delete) -->
+                    <div id="adminActions" class="hidden space-x-1">
+                        <button onclick="openEditPostModal()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-2 py-1 rounded text-3xs"><i class="fas fa-edit mr-1"></i>Editar</button>
+                        <button onclick="deleteCurrentPost()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-3xs"><i class="fas fa-trash mr-1"></i>Borrar</button>
+                    </div>
+                </div>
                 
                 <div class="flex items-center justify-between text-gray-500 border-b border-gray-200 pb-2">
                     <div class="flex items-center space-x-2">
@@ -265,53 +215,44 @@
                         <span>•</span>
                         <span id="modalPostDate"></span>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <button id="upvoteBtn" onclick="upvoteCurrentPost()" class="bg-green-100 text-green-700 hover:bg-green-200 font-bold px-2.5 py-1 rounded border border-green-300 flex items-center space-x-1">
-                            <i class="fas fa-thumbs-up"></i>
-                            <span id="modalUpvotesCount">0</span>
-                        </button>
-                    </div>
+                    <button id="upvoteBtn" onclick="upvoteCurrentPost()" class="bg-green-100 text-green-700 hover:bg-green-200 font-bold px-2.5 py-1 rounded border border-green-300 flex items-center space-x-1">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span id="modalUpvotesCount">0</span>
+                    </button>
                 </div>
 
                 <!-- Content Area -->
-                <div id="modalPostContent" class="text-gray-800 space-y-2 leading-relaxed bg-gray-50 p-3 rounded border border-gray-200 min-h-[100px] whitespace-pre-wrap">
+                <div id="modalPostContent" class="post-content text-gray-800 space-y-2 leading-relaxed bg-gray-50 p-3 rounded border border-gray-200 min-h-[100px] whitespace-pre-wrap">
                 </div>
 
-                <!-- Comments Section in Modal -->
+                <!-- Comments Section -->
                 <div class="border-t border-gray-200 pt-3 space-y-3">
                     <h4 class="font-bold text-gray-800 text-sm">Comentarios</h4>
-                    
-                    <div id="modalCommentsList" class="space-y-2 max-h-48 overflow-y-auto">
-                        <!-- Post specific comments here -->
-                    </div>
-
-                    <!-- Add Comment Box -->
+                    <div id="modalCommentsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
                     <div class="flex space-x-2 pt-2">
-                        <input type="text" id="newCommentInput" placeholder="Escribe un comentario..." class="flex-grow text-xs border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                        <button onclick="submitComment()" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-3 py-1.5 rounded text-xs">
-                            Comentar
-                        </button>
+                        <input type="text" id="newCommentInput" placeholder="Escribe un comentario..." class="flex-grow text-xs border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none">
+                        <button onclick="submitComment()" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-3 py-1.5 rounded text-xs">Comentar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- CREATE POST MODAL -->
+    <!-- CREATE / EDIT POST MODAL -->
     <div id="createPostModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
         <div class="bg-white rounded-lg shadow-xl max-w-lg w-full p-4 border border-gray-400">
             <div class="flex justify-between items-center border-b pb-2 mb-3">
-                <h3 class="font-bold text-blue-900 text-sm"><i class="fas fa-pen-square mr-1"></i> Publicar Nuevo Post</h3>
+                <h3 id="postModalTitle" class="font-bold text-blue-900 text-sm"><i class="fas fa-pen-square mr-1"></i> Publicar Nuevo Post</h3>
                 <button onclick="closeModal('createPostModal')" class="text-gray-500 hover:text-gray-800 text-lg font-bold">&times;</button>
             </div>
-            <form onsubmit="handleCreatePost(event)" class="space-y-3 text-xs">
+            <form onsubmit="handleSavePost(event)" class="space-y-3 text-xs">
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">Título del Post</label>
-                    <input type="text" id="postTitleInput" required placeholder="Ej: Las Mejores Películas Latino Online 4K" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    <input type="text" id="postTitleInput" required placeholder="Ej: Las Mejores Películas Latino" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
                 </div>
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">Categoría</label>
-                    <select id="postCategoryInput" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white">
+                    <select id="postCategoryInput" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none bg-white">
                         <option value="Películas">Películas</option>
                         <option value="Series">Series</option>
                         <option value="Juegos PC">Juegos PC</option>
@@ -321,12 +262,12 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block font-bold text-gray-700 mb-1">Contenido / Enlaces de Descarga</label>
-                    <textarea id="postContentInput" rows="4" required placeholder="Escribe detalles del post o pega tus links de descarga..." class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+                    <label class="block font-bold text-gray-700 mb-1">Contenido / Enlaces (puedes usar [img]URL[/img] para fotos)</label>
+                    <textarea id="postContentInput" rows="6" required placeholder="Escribe aquí... usa [img]https://i.imgur.com/...png[/img] para mostrar imágenes" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeModal('createPostModal')" class="px-3 py-1.5 bg-gray-200 text-gray-700 rounded font-bold">Cancelar</button>
-                    <button type="submit" id="btnSubmitPost" class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded font-bold">Publicar Post</button>
+                    <button type="submit" id="btnSubmitPost" class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded font-bold">Guardar Post</button>
                 </div>
             </form>
         </div>
@@ -341,14 +282,10 @@
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block font-bold text-gray-700 mb-1">Usuario / Email</label>
-                    <input type="text" id="loginUser" required placeholder="Tu nick o correo" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    <label class="block font-bold text-gray-700 mb-1">Usuario</label>
+                    <input type="text" id="loginUser" required placeholder="Tu nick" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none">
                 </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">Contraseña</label>
-                    <input type="password" id="loginPass" required placeholder="••••••••" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                </div>
-                <button type="submit" class="w-full py-1.5 bg-blue-700 hover:bg-blue-800 text-white rounded font-bold">Ingresar</button>
+                <button type="submit" class="w-full py-1.5 bg-blue-700 text-white rounded font-bold">Ingresar</button>
             </form>
         </div>
     </div>
@@ -357,58 +294,33 @@
     <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
         <div class="bg-white rounded-lg shadow-xl max-w-xs w-full p-4 border border-gray-400">
             <div class="flex justify-between items-center border-b pb-2 mb-3">
-                <h3 class="font-bold text-blue-900 text-sm"><i class="fas fa-user-plus mr-1"></i> Registro de Usuario</h3>
+                <h3 class="font-bold text-blue-900 text-sm"><i class="fas fa-user-plus mr-1"></i> Registro</h3>
                 <button onclick="closeModal('registerModal')" class="text-gray-500 hover:text-gray-800 text-lg font-bold">&times;</button>
             </div>
             <form onsubmit="handleRegister(event)" class="space-y-3 text-xs">
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">Nombre de Usuario</label>
-                    <input type="text" id="regUser" required placeholder="Elige un nick" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    <input type="text" id="regUser" required placeholder="Elige un nick" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none">
                 </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">Correo Electrónico</label>
-                    <input type="email" id="regEmail" required placeholder="correo@ejemplo.com" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">Contraseña</label>
-                    <input type="password" id="regPass" required placeholder="••••••••" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                </div>
-                <button type="submit" class="w-full py-1.5 bg-green-600 hover:bg-green-700 text-white rounded font-bold">Crear Cuenta</button>
+                <button type="submit" class="w-full py-1.5 bg-green-600 text-white rounded font-bold">Crear Cuenta</button>
             </form>
         </div>
     </div>
 
-    <!-- Classic Retro Footer -->
-    <footer class="bg-gray-800 text-gray-400 text-xs py-4 px-4 mt-6 border-t border-gray-700">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-            <div>
-                <span class="font-bold text-white">IDENTI</span> &copy; 2026 - Tus descargas sin límites
-            </div>
-            <div class="flex space-x-4 text-3xs">
-                <a href="#" class="hover:underline">DMCA</a>
-                <a href="#" class="hover:underline">Contacto</a>
-                <a href="#" class="hover:underline">Protocolo</a>
-                <a href="#" class="hover:underline">Ayuda</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Supabase Client & Application Logic -->
+    <!-- Supabase Logic Script -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Supabase Initialization
         const SUPABASE_URL = 'https://fueuwjkccdbglmuwvkwt.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_1BeksyLxSiPR3moMcoUDPw_e3NjCnSX';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // State Management
         let currentUser = localStorage.getItem('identi_user') || null;
         let activePostId = null;
+        let editingPostId = null;
         let selectedCategory = 'ALL';
         let posts = [];
         let commentsData = [];
 
-        // Init App
         window.onload = function() {
             if (currentUser) updateAuthUI();
             fetchPosts();
@@ -416,34 +328,23 @@
             fetchStats();
         };
 
-        // Fetch Posts from Supabase
         async function fetchPosts(category = 'ALL', search = '') {
             let query = _supabase.from('posts').select('*').order('created_at', { ascending: false });
 
-            if (category !== 'ALL') {
-                query = query.eq('category', category);
-            }
-            if (search) {
-                query = query.ilike('title', `%${search}%`);
-            }
+            if (category !== 'ALL') query = query.eq('category', category);
+            if (search) query = query.ilike('title', `%${search}%`);
 
             const { data, error } = await query;
-            if (error) {
-                console.error("Error cargando posts:", error);
-                document.getElementById('postsList').innerHTML = `<div class="p-4 text-center text-red-500">Error al cargar publicaciones.</div>`;
-                return;
+            if (!error) {
+                posts = data || [];
+                renderPosts();
             }
-
-            posts = data || [];
-            renderPosts();
         }
 
-        // Render Posts List
         function renderPosts() {
             const container = document.getElementById('postsList');
-
             if (posts.length === 0) {
-                container.innerHTML = `<div class="p-4 text-center text-gray-500">No hay publicaciones disponibles. ¡Sé el primero en publicar!</div>`;
+                container.innerHTML = `<div class="p-4 text-center text-gray-500">No hay publicaciones disponibles.</div>`;
                 return;
             }
 
@@ -452,101 +353,47 @@
                     <div class="flex items-center space-x-2.5 overflow-hidden">
                         <i class="${getCategoryIcon(post.category)} text-blue-600 text-sm flex-shrink-0"></i>
                         <div class="truncate">
-                            <span class="font-bold text-blue-900 group-hover:underline">
-                                ${post.title}
-                            </span>
+                            <span class="font-bold text-blue-900 group-hover:underline">${post.title}</span>
                             <div class="text-3xs text-gray-500 mt-0.5 flex space-x-2">
                                 <span class="font-semibold text-gray-700">${post.category}</span>
                                 <span>•</span>
                                 <span>por ${post.author || 'Anónimo'}</span>
-                                <span>•</span>
-                                <span>${new Date(post.created_at).toLocaleDateString()}</span>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center space-x-2 ml-2 flex-shrink-0 text-3xs text-gray-500">
-                        <span class="bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">
-                            <i class="fas fa-thumbs-up text-green-600 mr-0.5"></i>${post.upvotes || 0}
-                        </span>
-                        <span class="bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200">
-                            <i class="fas fa-comment text-blue-500 mr-0.5"></i>${post.comments || 0}
-                        </span>
+                        <span class="bg-gray-100 px-1.5 py-0.5 rounded border"><i class="fas fa-thumbs-up text-green-600 mr-0.5"></i>${post.upvotes || 0}</span>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Fetch Recent Comments
         async function fetchRecentComments() {
-            const { data, error } = await _supabase
-                .from('comments')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .limit(7);
-
-            if (!error && data) {
+            const { data } = await _supabase.from('comments').select('*').order('created_at', { ascending: false }).limit(5);
+            if (data) {
                 commentsData = data;
-                renderRecentComments();
+                document.getElementById('commentsList').innerHTML = data.map(c => `
+                    <div class="p-2 hover:bg-gray-50">
+                        <div class="font-bold text-blue-800 text-2xs">${c.user}</div>
+                        <div class="text-gray-600 text-3xs truncate">${c.text}</div>
+                    </div>
+                `).join('');
             }
         }
 
-        // Render Recent Comments Sidebar
-        function renderRecentComments() {
-            const container = document.getElementById('commentsList');
-            if (commentsData.length === 0) {
-                container.innerHTML = `<div class="p-3 text-center text-gray-400">Sin comentarios aún</div>`;
-                return;
-            }
-            container.innerHTML = commentsData.map(c => `
-                <div class="p-2 hover:bg-gray-50">
-                    <div class="font-bold text-blue-800 text-2xs">${c.user || 'Anónimo'}</div>
-                    <div class="text-gray-600 text-3xs truncate">${c.text}</div>
-                </div>
-            `).join('');
-        }
-
-        // Fetch General Stats
         async function fetchStats() {
             const { count: postCount } = await _supabase.from('posts').select('*', { count: 'exact', head: true });
-            const { count: commentCount } = await _supabase.from('comments').select('*', { count: 'exact', head: true });
-            
-            if (postCount !== null) document.getElementById('statPosts').innerText = postCount.toLocaleString();
-            if (commentCount !== null) document.getElementById('statComments').innerText = commentCount.toLocaleString();
-            document.getElementById('statMembers').innerText = Math.max(10, postCount * 2).toLocaleString();
+            if (postCount !== null) document.getElementById('statPosts').innerText = postCount;
         }
 
-        // Category Icon Helper
-        function getCategoryIcon(cat) {
-            switch(cat) {
-                case 'Películas': return 'fas fa-film';
-                case 'Series': return 'fas fa-tv';
-                case 'Juegos PC': return 'fas fa-gamepad';
-                case 'Software': return 'fas fa-desktop';
-                case 'Anime': return 'fas fa-dragon';
-                case 'Música': return 'fas fa-music';
-                default: return 'fas fa-file-alt';
-            }
+        function parseBBCode(text) {
+            if (!text) return '';
+            let formatted = text
+                .replace(/\[img\](.*?)\[\/img\]/gi, '<img src="$1" alt="Imagen post" class="max-w-full rounded my-2 border">')
+                .replace(/(https?:\/\/[^\s]+(?:\.png|\.jpg|\.jpeg|\.gif))/gi, '<img src="$1" class="max-w-full rounded my-2 border">');
+            return formatted;
         }
 
-        // Category Filter
-        function filterByCategory(cat) {
-            selectedCategory = cat;
-            document.getElementById('categorySelectFilter').value = cat;
-            fetchPosts(cat);
-        }
-
-        // Search Input Filter
-        function handleSearch() {
-            const query = document.getElementById('searchInput').value.trim();
-            fetchPosts(selectedCategory, query);
-        }
-
-        function resetFilters() {
-            document.getElementById('searchInput').value = '';
-            filterByCategory('ALL');
-        }
-
-        // Open Post Detail Modal
         async function openPostView(id) {
             const post = posts.find(p => p.id === id);
             if (!post) return;
@@ -557,22 +404,25 @@
             document.getElementById('modalPostAuthor').innerText = post.author || 'Anónimo';
             document.getElementById('modalPostDate').innerText = new Date(post.created_at).toLocaleString();
             document.getElementById('modalUpvotesCount').innerText = post.upvotes || 0;
-            document.getElementById('modalPostContent').innerText = post.content;
+            document.getElementById('modalPostContent').innerHTML = parseBBCode(post.content);
 
-            // Load Post Comments
-            const { data: comments, error } = await _supabase
-                .from('comments')
-                .select('*')
-                .eq('post_id', id)
-                .order('created_at', { ascending: true });
+            // Mostrar u ocultar acciones de Editar/Eliminar
+            const adminBox = document.getElementById('adminActions');
+            if (currentUser && (currentUser.toLowerCase() === 'gustavox10' || currentUser === post.author)) {
+                adminBox.classList.remove('hidden');
+            } else {
+                adminBox.classList.add('hidden');
+            }
 
+            // Load Comments
+            const { data: comments } = await _supabase.from('comments').select('*').eq('post_id', id);
             const commentsContainer = document.getElementById('modalCommentsList');
-            if (error || !comments || comments.length === 0) {
-                commentsContainer.innerHTML = `<div class="text-gray-400 italic text-3xs">Aún no hay comentarios en este post. Sé el primero.</div>`;
+            if (!comments || comments.length === 0) {
+                commentsContainer.innerHTML = `<div class="text-gray-400 italic text-3xs">Sin comentarios.</div>`;
             } else {
                 commentsContainer.innerHTML = comments.map(c => `
                     <div class="bg-gray-100 p-2 rounded border border-gray-200">
-                        <div class="font-bold text-blue-900 text-3xs">${c.user} <span class="text-gray-400 font-normal ml-1">${new Date(c.created_at).toLocaleTimeString()}</span></div>
+                        <div class="font-bold text-blue-900 text-3xs">${c.user}</div>
                         <div class="text-gray-700 text-xs mt-0.5">${c.text}</div>
                     </div>
                 `).join('');
@@ -581,105 +431,84 @@
             openModal('postViewModal');
         }
 
-        // Upvote Post
-        async function upvoteCurrentPost() {
-            if (!activePostId) return;
-            const post = posts.find(p => p.id === activePostId);
-            if (post) {
-                const newUpvotes = (post.upvotes || 0) + 1;
-                post.upvotes = newUpvotes;
-                document.getElementById('modalUpvotesCount').innerText = newUpvotes;
-
-                await _supabase
-                    .from('posts')
-                    .update({ upvotes: newUpvotes })
-                    .eq('id', activePostId);
-
-                fetchPosts(selectedCategory);
-            }
-        }
-
-        // Submit Comment
-        async function submitComment() {
-            const input = document.getElementById('newCommentInput');
-            const text = input.value.trim();
-            if (!text) return;
-
-            const username = currentUser ? currentUser : 'Taringuero_' + Math.floor(Math.random() * 900 + 100);
-
-            const { error } = await _supabase
-                .from('comments')
-                .insert([{ post_id: activePostId, user: username, text: text }]);
-
-            if (error) {
-                alert("Error al enviar el comentario");
-                return;
-            }
-
-            // Increment comments count on post
-            const post = posts.find(p => p.id === activePostId);
-            if (post) {
-                const newCount = (post.comments || 0) + 1;
-                await _supabase.from('posts').update({ comments: newCount }).eq('id', activePostId);
-            }
-
-            input.value = '';
-            openPostView(activePostId);
-            fetchRecentComments();
-            fetchPosts(selectedCategory);
-            fetchStats();
-        }
-
-        // Create Post Handler
         function openCreatePostModal() {
             if (!currentUser) {
-                alert("Debes iniciar sesión para publicar un post.");
+                alert("Debes iniciar sesión.");
                 openModal('loginModal');
                 return;
             }
+            editingPostId = null;
+            document.getElementById('postModalTitle').innerHTML = '<i class="fas fa-pen-square mr-1"></i> Publicar Nuevo Post';
+            document.getElementById('postTitleInput').value = '';
+            document.getElementById('postContentInput').value = '';
             openModal('createPostModal');
         }
 
-        async function handleCreatePost(e) {
+        function openEditPostModal() {
+            const post = posts.find(p => p.id === activePostId);
+            if (!post) return;
+
+            editingPostId = activePostId;
+            document.getElementById('postModalTitle').innerHTML = '<i class="fas fa-edit mr-1"></i> Editar Post';
+            document.getElementById('postTitleInput').value = post.title;
+            document.getElementById('postCategoryInput').value = post.category;
+            document.getElementById('postContentInput').value = post.content;
+            
+            closeModal('postViewModal');
+            openModal('createPostModal');
+        }
+
+        async function handleSavePost(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmitPost');
             btn.disabled = true;
-            btn.innerText = "Publicando...";
 
             const title = document.getElementById('postTitleInput').value;
             const category = document.getElementById('postCategoryInput').value;
             const content = document.getElementById('postContentInput').value;
 
-            const { error } = await _supabase
-                .from('posts')
-                .insert([
-                    {
-                        title: title,
-                        category: category,
-                        content: content,
-                        author: currentUser,
-                        upvotes: 1,
-                        comments: 0
-                    }
-                ]);
-
-            btn.disabled = false;
-            btn.innerText = "Publicar Post";
-
-            if (error) {
-                alert("Error al guardar el post: " + error.message);
-                return;
+            if (editingPostId) {
+                // Editar Post
+                await _supabase.from('posts').update({ title, category, content }).eq('id', editingPostId);
+            } else {
+                // Crear Post Nuevo
+                await _supabase.from('posts').insert([{ title, category, content, author: currentUser, upvotes: 1 }]);
             }
 
+            btn.disabled = false;
             closeModal('createPostModal');
-            document.getElementById('postTitleInput').value = '';
-            document.getElementById('postContentInput').value = '';
-
             fetchPosts(selectedCategory);
-            fetchStats();
         }
 
-        // Auth Logic
+        async function deleteCurrentPost() {
+            if (!confirm("¿Seguro que deseas eliminar este post?")) return;
+            await _supabase.from('posts').delete().eq('id', activePostId);
+            closeModal('postViewModal');
+            fetchPosts(selectedCategory);
+        }
+
+        async function upvoteCurrentPost() {
+            const post = posts.find(p => p.id === activePostId);
+            if (post) {
+                const newUpvotes = (post.upvotes || 0) + 1;
+                post.upvotes = newUpvotes;
+                document.getElementById('modalUpvotesCount').innerText = newUpvotes;
+                await _supabase.from('posts').update({ upvotes: newUpvotes }).eq('id', activePostId);
+                fetchPosts(selectedCategory);
+            }
+        }
+
+        async function submitComment() {
+            const input = document.getElementById('newCommentInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            await _supabase.from('comments').insert([{ post_id: activePostId, user: currentUser || 'Anónimo', text }]);
+            input.value = '';
+            openPostView(activePostId);
+            fetchRecentComments();
+        }
+
         function handleLogin(e) {
             e.preventDefault();
             const user = document.getElementById('loginUser').value.trim();
@@ -715,27 +544,45 @@
                 document.getElementById('userNavProfile').classList.add('flex');
                 document.getElementById('usernameDisplay').innerText = currentUser;
                 document.getElementById('createPostNavBtn').classList.remove('hidden');
+
+                if (currentUser.toLowerCase() === 'gustavox10') {
+                    document.getElementById('userRankBadge').innerText = 'Rango: ADMIN';
+                    document.getElementById('userRankBadge').className = 'text-xs bg-red-600 text-white px-1.5 py-0.5 rounded font-bold';
+                }
             } else {
                 document.getElementById('authNavButtons').classList.remove('hidden');
                 document.getElementById('userNavProfile').classList.add('hidden');
-                document.getElementById('userNavProfile').classList.remove('flex');
                 document.getElementById('createPostNavBtn').classList.add('hidden');
             }
         }
 
-        // Modal Helpers
-        function openModal(id) {
-            document.getElementById(id).classList.remove('hidden');
+        function getCategoryIcon(cat) {
+            switch(cat) {
+                case 'Películas': return 'fas fa-film';
+                case 'Series': return 'fas fa-tv';
+                case 'Juegos PC': return 'fas fa-gamepad';
+                case 'Software': return 'fas fa-desktop';
+                default: return 'fas fa-file-alt';
+            }
         }
 
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
+        function filterByCategory(cat) {
+            selectedCategory = cat;
+            fetchPosts(cat);
         }
 
-        function showTops() {
-            posts.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0));
-            renderPosts();
+        function handleSearch() {
+            fetchPosts(selectedCategory, document.getElementById('searchInput').value.trim());
         }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            filterByCategory('ALL');
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function showTops() { posts.sort((a, b) => (b.upvotes || 0) - (a.upvotes || 0)); renderPosts(); }
     </script>
 </body>
 </html>
