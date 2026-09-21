@@ -243,7 +243,7 @@
                 <button onclick="previewPost()" class="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded text-xs shadow flex items-center">
                     <i class="fas fa-eye mr-1.5"></i> Previsualizar
                 </button>
-                <button onclick="saveEditorPost()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded text-xs shadow flex items-center">
+                <button id="btnSaveEditor" onclick="saveEditorPost()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded text-xs shadow flex items-center">
                     <i class="fas fa-save mr-1.5"></i> Publicar / Guardar
                 </button>
                 <button onclick="showHomeView()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-3 py-2 rounded text-xs">
@@ -454,6 +454,7 @@
         }
 
         async function saveEditorPost() {
+            const btn = document.getElementById('btnSaveEditor');
             const title = document.getElementById('editorTitle').value.trim();
             const category = document.getElementById('editorCategory').value;
             const content = document.getElementById('editorContent').value.trim();
@@ -463,14 +464,27 @@
                 return;
             }
 
-            if (editingPostId) {
-                await _supabase.from('posts').update({ title, category, content }).eq('id', editingPostId);
-            } else {
-                await _supabase.from('posts').insert([{ title, category, content, author: currentUser, upvotes: 1 }]);
-            }
+            btn.disabled = true;
+            btn.innerText = "Guardando...";
 
-            showHomeView();
-            fetchPosts(selectedCategory);
+            try {
+                if (editingPostId) {
+                    const { error } = await _supabase.from('posts').update({ title, category, content }).eq('id', editingPostId);
+                    if (error) throw error;
+                } else {
+                    const { error } = await _supabase.from('posts').insert([{ title, category, content, author: currentUser || 'Anónimo', upvotes: 1 }]);
+                    if (error) throw error;
+                }
+
+                showHomeView();
+                await fetchPosts(selectedCategory);
+                await fetchStats();
+            } catch (err) {
+                alert("Error al guardar en Supabase: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save mr-1.5"></i> Publicar / Guardar';
+            }
         }
 
         async function fetchPosts(category = 'ALL', search = '') {
@@ -587,6 +601,7 @@
             await _supabase.from('posts').delete().eq('id', activePostId);
             closeModal('postViewModal');
             fetchPosts(selectedCategory);
+            fetchStats();
         }
 
         async function upvoteCurrentPost() {
