@@ -40,8 +40,12 @@
             max-width: 100%;
             height: auto;
             border-radius: 4px;
-            margin: 10px 0;
+            margin: 10px auto;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: block;
+        }
+        .post-content.center-text {
+            text-align: center;
         }
     </style>
 </head>
@@ -51,11 +55,11 @@
     <nav class="bg-black text-gray-300 text-xs py-1.5 px-4">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center">
             <div class="flex space-x-4 font-bold">
-                <a href="#" onclick="filterByCategory('Películas')" class="hover:text-white transition">Películas</a>
-                <a href="#" onclick="filterByCategory('Series')" class="hover:text-white transition">Series</a>
-                <a href="#" onclick="filterByCategory('Juegos PC')" class="hover:text-white transition">Juegos PC</a>
-                <a href="#" onclick="filterByCategory('Software')" class="hover:text-white transition">Software</a>
-                <a href="#" id="createPostNavBtn" onclick="openCreatePostModal()" class="text-green-400 font-extrabold hover:underline hidden">+ Crear Post</a>
+                <a href="#" onclick="showHomeView(); filterByCategory('Películas');" class="hover:text-white transition">Películas</a>
+                <a href="#" onclick="showHomeView(); filterByCategory('Series');" class="hover:text-white transition">Series</a>
+                <a href="#" onclick="showHomeView(); filterByCategory('Juegos PC');" class="hover:text-white transition">Juegos PC</a>
+                <a href="#" onclick="showHomeView(); filterByCategory('Software');" class="hover:text-white transition">Software</a>
+                <a href="#" id="createPostNavBtn" onclick="showCreatePostView()" class="text-green-400 font-extrabold hover:underline hidden">+ Crear Post</a>
             </div>
             <div class="flex space-x-3 items-center" id="authNavButtons">
                 <button onclick="openModal('registerModal')" class="text-green-400 font-bold hover:underline"><i class="fas fa-user-plus mr-1"></i>Regístrate</button>
@@ -73,7 +77,7 @@
     <!-- Header Banner -->
     <header class="identi-header-bg text-white py-6 px-4 shadow-lg border-b-4 border-blue-950 relative overflow-hidden">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showHomeView()">
                 <div>
                     <h1 class="text-4xl sm:text-5xl font-black tracking-wider font-sans text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center">
                         <span class="text-white">IDENTI</span>
@@ -97,26 +101,23 @@
     <div class="bg-white border-b border-gray-300 sticky-top-sub shadow-sm">
         <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between text-xs font-bold text-gray-600 px-4">
             <div class="flex space-x-1 sm:space-x-4">
-                <button onclick="resetFilters()" class="py-2.5 px-3 hover:bg-gray-100 border-b-2 border-blue-600 text-blue-700 flex items-center">
+                <button onclick="showHomeView(); resetFilters();" class="py-2.5 px-3 hover:bg-gray-100 border-b-2 border-blue-600 text-blue-700 flex items-center">
                     <i class="fas fa-home mr-1.5 text-blue-500"></i>Posts
                 </button>
-                <button onclick="showTops()" class="py-2.5 px-3 hover:bg-gray-100 flex items-center">
+                <button onclick="showHomeView(); showTops();" class="py-2.5 px-3 hover:bg-gray-100 flex items-center">
                     <i class="fas fa-layer-group mr-1.5 text-yellow-600"></i>Tops
-                </button>
-                <button onclick="document.getElementById('searchInput').focus()" class="py-2.5 px-3 hover:bg-gray-100 flex items-center">
-                    <i class="fas fa-search mr-1.5 text-purple-600"></i>Buscador
                 </button>
             </div>
             <div id="newPostBtnContainer" class="py-1">
-                <button onclick="openCreatePostModal()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs shadow flex items-center transition">
-                    <i class="fas fa-plus-circle mr-1"></i> Crear Post
+                <button onclick="showCreatePostView()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs shadow flex items-center transition">
+                    <i class="fas fa-pen-square mr-1"></i> Publicar post
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 grid grid-cols-1 md:grid-cols-12 gap-4">
+    <!-- MAIN HOME VIEW -->
+    <main id="homeView" class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 grid grid-cols-1 md:grid-cols-12 gap-4">
         <!-- LEFT COLUMN: Ultimos Posts -->
         <section class="md:col-span-6 lg:col-span-5 flex flex-col space-y-3">
             <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden">
@@ -178,7 +179,7 @@
             <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden">
                 <div class="forum-header-bar px-3 py-2 border-b border-forum">
                     <h3 class="font-bold text-blue-900 text-sm flex items-center">
-                        <i class="fas fa-folder-open mr-2 text-blue-600"></i>Categorías Populares
+                        <i class="fas fa-folder-open mr-2 text-blue-600"></i>Categorías
                     </h3>
                 </div>
                 <div class="p-2 text-xs font-semibold uppercase tracking-wider space-y-1">
@@ -191,6 +192,97 @@
         </section>
     </main>
 
+    <!-- IDENTI CREATE / EDIT POST PAGE VIEW -->
+    <main id="createPostPage" class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 hidden grid-cols-1 md:grid-cols-12 gap-4">
+        <!-- Editor Left Area -->
+        <div class="md:col-span-8 bg-white border border-forum box-shadow-retro p-4 rounded text-xs space-y-4">
+            <h2 class="text-xl font-bold text-blue-900 border-b pb-2">Comparte un post en identi...</h2>
+            
+            <div>
+                <label class="block font-bold text-gray-700 mb-1">Título del post...</label>
+                <input type="text" id="editorTitle" placeholder="Escribe el título aquí..." class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-inner">
+            </div>
+
+            <!-- Toolbar BBCode Buttons -->
+            <div class="bg-gray-100 p-2 rounded border border-gray-300 flex flex-wrap gap-1">
+                <button onclick="insertBBCode('[b]', '[/b]')" class="px-2 py-1 bg-white border rounded font-bold hover:bg-gray-50" title="Negrita">B</button>
+                <button onclick="insertBBCode('[i]', '[/i]')" class="px-2 py-1 bg-white border rounded italic hover:bg-gray-50" title="Cursiva">I</button>
+                <button onclick="insertBBCode('[u]', '[/u]')" class="px-2 py-1 bg-white border rounded underline hover:bg-gray-50" title="Subrayado">U</button>
+                <span class="border-r border-gray-300 mx-1"></span>
+                <button onclick="insertBBCode('[img]', '[/img]')" class="px-2 py-1 bg-white border rounded text-blue-600 hover:bg-gray-50 font-bold" title="Insertar Imagen"><i class="fas fa-image mr-1"></i>Imagen</button>
+                <button onclick="insertBBCode('[url=]', '[/url]')" class="px-2 py-1 bg-white border rounded text-blue-600 hover:bg-gray-50 font-bold" title="Insertar Link"><i class="fas fa-link mr-1"></i>Enlace</button>
+            </div>
+
+            <!-- Textarea -->
+            <textarea id="editorContent" rows="12" placeholder="Escribe el contenido de tu post aquí..." class="w-full border border-gray-300 rounded p-3 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono"></textarea>
+
+            <!-- Category & Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t pt-3">
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">Categoría:</label>
+                    <select id="editorCategory" class="w-full border border-gray-300 rounded p-2 bg-white">
+                        <option value="Películas">Películas</option>
+                        <option value="Series">Series</option>
+                        <option value="Juegos PC">Juegos PC</option>
+                        <option value="Software">Software</option>
+                        <option value="Anime">Anime</option>
+                        <option value="Música">Música</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <span class="block font-bold text-gray-700 mb-1">Opciones:</span>
+                    <label class="flex items-center space-x-2 text-xs">
+                        <input type="checkbox" id="optionCenter" class="rounded">
+                        <span>Forzar centrado del contenido</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Action Buttons (PREVISUALIZAR / GUARDAR) -->
+            <div class="flex space-x-3 pt-3 border-t">
+                <button onclick="previewPost()" class="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded text-xs shadow flex items-center">
+                    <i class="fas fa-eye mr-1.5"></i> Previsualizar
+                </button>
+                <button onclick="saveEditorPost()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded text-xs shadow flex items-center">
+                    <i class="fas fa-save mr-1.5"></i> Publicar / Guardar
+                </button>
+                <button onclick="showHomeView()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-3 py-2 rounded text-xs">
+                    Cancelar
+                </button>
+            </div>
+
+            <!-- Preview Container Box -->
+            <div id="previewContainer" class="hidden border-2 border-dashed border-green-500 p-4 rounded bg-white mt-4 space-y-3">
+                <div class="bg-green-100 text-green-800 text-3xs font-bold px-2 py-1 rounded w-max uppercase">
+                    Vista Previa del Post
+                </div>
+                <h2 id="previewTitle" class="text-xl font-bold text-blue-900"></h2>
+                <div id="previewBody" class="post-content text-xs text-gray-800 bg-gray-50 p-3 rounded border border-gray-200"></div>
+            </div>
+        </div>
+
+        <!-- Right Instructions Box (Identi Protocol) -->
+        <div class="md:col-span-4 space-y-3">
+            <div class="bg-white border border-forum box-shadow-retro p-3 rounded text-xs">
+                <h3 class="font-bold text-blue-900 border-b pb-1 mb-2 text-sm">Importante, leer...</h3>
+                <p class="font-bold text-gray-700 mb-1">Para un mejor post:</p>
+                <ul class="space-y-1 text-gray-600 text-3xs">
+                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Un título descriptivo y claro.</li>
+                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Contenido con abundante información.</li>
+                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Usar imagenes y enlaces limpios.</li>
+                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Escribir sin faltas de ortografía.</li>
+                </ul>
+
+                <p class="font-bold text-red-700 mt-3 mb-1">No se permite:</p>
+                <ul class="space-y-1 text-gray-600 text-3xs">
+                    <li class="flex items-center text-red-600"><i class="fas fa-times mr-1.5"></i> Títulos EN MAYÚSCULAS o exagerados.</li>
+                    <li class="flex items-center text-red-600"><i class="fas fa-times mr-1.5"></i> Enlaces con acortadores o publicidad.</li>
+                    <li class="flex items-center text-red-600"><i class="fas fa-times mr-1.5"></i> Contenido de baja calidad o vacío.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
     <!-- POST DETAILS MODAL -->
     <div id="postViewModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
         <div class="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-gray-400">
@@ -201,9 +293,8 @@
             <div class="p-4 overflow-y-auto space-y-4 text-xs">
                 <div class="flex justify-between items-start">
                     <h2 id="modalPostTitle" class="text-lg font-bold text-blue-900"></h2>
-                    <!-- Action Buttons (Edit / Delete) -->
                     <div id="adminActions" class="hidden space-x-1">
-                        <button onclick="openEditPostModal()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-2 py-1 rounded text-3xs"><i class="fas fa-edit mr-1"></i>Editar</button>
+                        <button onclick="editCurrentPost()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-2 py-1 rounded text-3xs"><i class="fas fa-edit mr-1"></i>Editar</button>
                         <button onclick="deleteCurrentPost()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-3xs"><i class="fas fa-trash mr-1"></i>Borrar</button>
                     </div>
                 </div>
@@ -235,41 +326,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- CREATE / EDIT POST MODAL -->
-    <div id="createPostModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
-        <div class="bg-white rounded-lg shadow-xl max-w-lg w-full p-4 border border-gray-400">
-            <div class="flex justify-between items-center border-b pb-2 mb-3">
-                <h3 id="postModalTitle" class="font-bold text-blue-900 text-sm"><i class="fas fa-pen-square mr-1"></i> Publicar Nuevo Post</h3>
-                <button onclick="closeModal('createPostModal')" class="text-gray-500 hover:text-gray-800 text-lg font-bold">&times;</button>
-            </div>
-            <form onsubmit="handleSavePost(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">Título del Post</label>
-                    <input type="text" id="postTitleInput" required placeholder="Ej: Las Mejores Películas Latino" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">Categoría</label>
-                    <select id="postCategoryInput" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none bg-white">
-                        <option value="Películas">Películas</option>
-                        <option value="Series">Series</option>
-                        <option value="Juegos PC">Juegos PC</option>
-                        <option value="Software">Software</option>
-                        <option value="Anime">Anime</option>
-                        <option value="Música">Música</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">Contenido / Enlaces (puedes usar [img]URL[/img] para fotos)</label>
-                    <textarea id="postContentInput" rows="6" required placeholder="Escribe aquí... usa [img]https://i.imgur.com/...png[/img] para mostrar imágenes" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeModal('createPostModal')" class="px-3 py-1.5 bg-gray-200 text-gray-700 rounded font-bold">Cancelar</button>
-                    <button type="submit" id="btnSubmitPost" class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded font-bold">Guardar Post</button>
-                </div>
-            </form>
         </div>
     </div>
 
@@ -319,7 +375,6 @@
         let editingPostId = null;
         let selectedCategory = 'ALL';
         let posts = [];
-        let commentsData = [];
 
         window.onload = function() {
             if (currentUser) updateAuthUI();
@@ -328,9 +383,98 @@
             fetchStats();
         };
 
+        function showHomeView() {
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('homeView').classList.add('grid');
+            document.getElementById('createPostPage').classList.add('hidden');
+            document.getElementById('createPostPage').classList.remove('grid');
+        }
+
+        function showCreatePostView(postToEdit = null) {
+            if (!currentUser) {
+                alert("Debes iniciar sesión para crear o editar publicaciones.");
+                openModal('loginModal');
+                return;
+            }
+
+            if (postToEdit) {
+                editingPostId = postToEdit.id;
+                document.getElementById('editorTitle').value = postToEdit.title;
+                document.getElementById('editorContent').value = postToEdit.content;
+                document.getElementById('editorCategory').value = postToEdit.category;
+            } else {
+                editingPostId = null;
+                document.getElementById('editorTitle').value = '';
+                document.getElementById('editorContent').value = '';
+                document.getElementById('previewContainer').classList.add('hidden');
+            }
+
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('homeView').classList.remove('grid');
+            document.getElementById('createPostPage').classList.remove('hidden');
+            document.getElementById('createPostPage').classList.add('grid');
+        }
+
+        function insertBBCode(startTag, endTag) {
+            const textarea = document.getElementById('editorContent');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            const selectedText = text.substring(start, end);
+            const replacement = startTag + selectedText + endTag;
+            textarea.value = text.substring(0, start) + replacement + text.substring(end);
+            textarea.focus();
+        }
+
+        function previewPost() {
+            const title = document.getElementById('editorTitle').value.trim();
+            const content = document.getElementById('editorContent').value.trim();
+            const isCentered = document.getElementById('optionCenter').checked;
+
+            if (!title || !content) {
+                alert("Escribe un título y contenido para previsualizar.");
+                return;
+            }
+
+            const previewBox = document.getElementById('previewContainer');
+            const previewTitle = document.getElementById('previewTitle');
+            const previewBody = document.getElementById('previewBody');
+
+            previewTitle.innerText = title;
+            previewBody.innerHTML = parseBBCode(content);
+
+            if (isCentered) {
+                previewBody.classList.add('center-text');
+            } else {
+                previewBody.classList.remove('center-text');
+            }
+
+            previewBox.classList.remove('hidden');
+            previewBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function saveEditorPost() {
+            const title = document.getElementById('editorTitle').value.trim();
+            const category = document.getElementById('editorCategory').value;
+            const content = document.getElementById('editorContent').value.trim();
+
+            if (!title || !content) {
+                alert("Por favor completa el título y el contenido.");
+                return;
+            }
+
+            if (editingPostId) {
+                await _supabase.from('posts').update({ title, category, content }).eq('id', editingPostId);
+            } else {
+                await _supabase.from('posts').insert([{ title, category, content, author: currentUser, upvotes: 1 }]);
+            }
+
+            showHomeView();
+            fetchPosts(selectedCategory);
+        }
+
         async function fetchPosts(category = 'ALL', search = '') {
             let query = _supabase.from('posts').select('*').order('created_at', { ascending: false });
-
             if (category !== 'ALL') query = query.eq('category', category);
             if (search) query = query.ilike('title', `%${search}%`);
 
@@ -371,7 +515,6 @@
         async function fetchRecentComments() {
             const { data } = await _supabase.from('comments').select('*').order('created_at', { ascending: false }).limit(5);
             if (data) {
-                commentsData = data;
                 document.getElementById('commentsList').innerHTML = data.map(c => `
                     <div class="p-2 hover:bg-gray-50">
                         <div class="font-bold text-blue-800 text-2xs">${c.user}</div>
@@ -389,8 +532,12 @@
         function parseBBCode(text) {
             if (!text) return '';
             let formatted = text
-                .replace(/\[img\](.*?)\[\/img\]/gi, '<img src="$1" alt="Imagen post" class="max-w-full rounded my-2 border">')
-                .replace(/(https?:\/\/[^\s]+(?:\.png|\.jpg|\.jpeg|\.gif))/gi, '<img src="$1" class="max-w-full rounded my-2 border">');
+                .replace(/\[b\](.*?)\[\/b\]/gi, '<strong>$1</strong>')
+                .replace(/\[i\](.*?)\[\/i\]/gi, '<em>$1</em>')
+                .replace(/\[u\](.*?)\[\/u\]/gi, '<span class="underline">$1</span>')
+                .replace(/\[img\](.*?)\[\/img\]/gi, '<img src="$1" alt="Imagen post">')
+                .replace(/\[url=(.*?)\](.*?)\[\/url\]/gi, '<a href="$1" target="_blank" class="text-blue-600 underline font-bold">$2</a>')
+                .replace(/(https?:\/\/[^\s]+(?:\.png|\.jpg|\.jpeg|\.gif))/gi, '<img src="$1" alt="Imagen">');
             return formatted;
         }
 
@@ -406,7 +553,6 @@
             document.getElementById('modalUpvotesCount').innerText = post.upvotes || 0;
             document.getElementById('modalPostContent').innerHTML = parseBBCode(post.content);
 
-            // Mostrar u ocultar acciones de Editar/Eliminar
             const adminBox = document.getElementById('adminActions');
             if (currentUser && (currentUser.toLowerCase() === 'gustavox10' || currentUser === post.author)) {
                 adminBox.classList.remove('hidden');
@@ -414,7 +560,6 @@
                 adminBox.classList.add('hidden');
             }
 
-            // Load Comments
             const { data: comments } = await _supabase.from('comments').select('*').eq('post_id', id);
             const commentsContainer = document.getElementById('modalCommentsList');
             if (!comments || comments.length === 0) {
@@ -431,53 +576,10 @@
             openModal('postViewModal');
         }
 
-        function openCreatePostModal() {
-            if (!currentUser) {
-                alert("Debes iniciar sesión.");
-                openModal('loginModal');
-                return;
-            }
-            editingPostId = null;
-            document.getElementById('postModalTitle').innerHTML = '<i class="fas fa-pen-square mr-1"></i> Publicar Nuevo Post';
-            document.getElementById('postTitleInput').value = '';
-            document.getElementById('postContentInput').value = '';
-            openModal('createPostModal');
-        }
-
-        function openEditPostModal() {
+        function editCurrentPost() {
             const post = posts.find(p => p.id === activePostId);
-            if (!post) return;
-
-            editingPostId = activePostId;
-            document.getElementById('postModalTitle').innerHTML = '<i class="fas fa-edit mr-1"></i> Editar Post';
-            document.getElementById('postTitleInput').value = post.title;
-            document.getElementById('postCategoryInput').value = post.category;
-            document.getElementById('postContentInput').value = post.content;
-            
             closeModal('postViewModal');
-            openModal('createPostModal');
-        }
-
-        async function handleSavePost(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btnSubmitPost');
-            btn.disabled = true;
-
-            const title = document.getElementById('postTitleInput').value;
-            const category = document.getElementById('postCategoryInput').value;
-            const content = document.getElementById('postContentInput').value;
-
-            if (editingPostId) {
-                // Editar Post
-                await _supabase.from('posts').update({ title, category, content }).eq('id', editingPostId);
-            } else {
-                // Crear Post Nuevo
-                await _supabase.from('posts').insert([{ title, category, content, author: currentUser, upvotes: 1 }]);
-            }
-
-            btn.disabled = false;
-            closeModal('createPostModal');
-            fetchPosts(selectedCategory);
+            if (post) showCreatePostView(post);
         }
 
         async function deleteCurrentPost() {
