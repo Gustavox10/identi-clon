@@ -11,30 +11,22 @@
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #e9ecef;
+            background-color: #000000;
             color: #333;
         }
         .identi-header-bg {
-            background: linear-gradient(180deg, #002244 0%, #004080 50%, #002244 100%);
+            background: #002244 linear-gradient(180deg, #001226 0%, #002d5a 50%, #001226 100%);
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(0, 102, 204, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(0, 70, 150, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 12%, transparent 13%);
-            background-size: 100% 100%, 100% 100%, 20px 20px;
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 12%, transparent 13%),
+                linear-gradient(180deg, #001020 0%, #002c58 50%, #001020 100%);
+            background-size: 16px 16px, 100% 100%;
         }
-        .box-shadow-retro {
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        }
-        .border-forum {
-            border: 1px solid #c5d0dc;
+        .border-forum-card {
+            border: 1px solid #c8d6e5;
         }
         .forum-header-bar {
-            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-        }
-        .sticky-top-sub {
-            position: sticky;
-            top: 0;
-            z-index: 30;
+            background: linear-gradient(180deg, #eef4fc 0%, #dbe6f5 100%);
+            border-bottom: 1px solid #b8cae0;
         }
         .post-content img {
             max-width: 100%;
@@ -51,20 +43,23 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Top Dark Bar -->
-    <nav class="bg-black text-gray-300 text-xs py-1.5 px-4">
+    <!-- Top Navigation Bar -->
+    <nav class="bg-black text-white text-xs font-bold py-2 px-4 border-b border-gray-900">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center">
-            <div class="flex space-x-4 font-bold">
-                <a href="#" onclick="showHomeView(); filterByCategory('Películas');" class="hover:text-white transition">Películas</a>
-                <a href="#" onclick="showHomeView(); filterByCategory('Series');" class="hover:text-white transition">Series</a>
-                <a href="#" onclick="showHomeView(); filterByCategory('Juegos PC');" class="hover:text-white transition">Juegos PC</a>
-                <a href="#" onclick="showHomeView(); filterByCategory('Software');" class="hover:text-white transition">Software</a>
-                <a href="#" id="createPostNavBtn" onclick="showCreatePostView()" class="text-green-400 font-extrabold hover:underline hidden">+ Crear Post</a>
+            <div class="flex space-x-6">
+                <a href="#" onclick="showHomeView(); filterByCategory('Películas');" class="hover:text-blue-400 transition">Películas</a>
+                <a href="#" onclick="showHomeView(); filterByCategory('Series');" class="hover:text-blue-400 transition">Series</a>
+                <a href="#" onclick="showHomeView(); filterByCategory('Juegos PC');" class="hover:text-blue-400 transition">Juegos PC</a>
+                <a href="#" onclick="showHomeView(); filterByCategory('Software');" class="hover:text-blue-400 transition">Software</a>
             </div>
-            <div class="flex space-x-3 items-center" id="authNavButtons">
-                <button onclick="openModal('registerModal')" class="text-green-400 font-bold hover:underline"><i class="fas fa-user-plus mr-1"></i>Regístrate</button>
+            <div class="flex space-x-4 items-center" id="authNavButtons">
+                <button onclick="openModal('registerModal')" class="text-green-400 font-bold hover:underline flex items-center">
+                    <i class="fas fa-user-plus mr-1"></i> Regístrate
+                </button>
                 <span class="text-gray-600">|</span>
-                <button onclick="openModal('loginModal')" class="hover:text-white font-bold"><i class="fas fa-sign-in-alt mr-1"></i>Accede</button>
+                <button onclick="openModal('loginModal')" class="hover:text-white font-bold flex items-center">
+                    <i class="fas fa-sign-in-alt mr-1"></i> Accede
+                </button>
             </div>
             <div class="hidden items-center space-x-3" id="userNavProfile">
                 <span class="text-white font-bold"><i class="fas fa-user text-blue-400 mr-1"></i><span id="usernameDisplay">Usuario</span></span>
@@ -75,57 +70,57 @@
     </nav>
 
     <!-- Header Banner -->
-    <header class="identi-header-bg text-white py-6 px-4 shadow-lg border-b-4 border-blue-950 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="showHomeView()">
-                <div>
-                    <h1 class="text-4xl sm:text-5xl font-black tracking-wider font-sans text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center">
-                        <span class="text-white">IDENTI</span>
-                    </h1>
-                    <p class="text-3xs tracking-widest text-cyan-300 font-bold uppercase mt-0.5 drop-shadow">
-                        TUS DESCARGAS <span class="text-white">SIN LÍMITES</span>
-                    </p>
-                </div>
+    <header class="max-w-7xl mx-auto w-full mt-2 px-2">
+        <div class="identi-header-bg rounded-t border border-blue-900 text-white py-5 px-6 flex flex-col md:flex-row justify-between items-center shadow-lg">
+            <div class="cursor-pointer" onclick="showHomeView()">
+                <h1 class="text-4xl sm:text-5xl font-black tracking-wider text-white flex items-center drop-shadow-md">
+                    IDENTI
+                </h1>
+                <p class="text-3xs tracking-widest text-cyan-400 font-extrabold uppercase mt-0.5">
+                    TUS DESCARGAS <span class="text-white">SIN LÍMITES</span>
+                </p>
             </div>
-            <div class="mt-4 md:mt-0 flex items-center space-x-2 w-full md:w-80">
-                <div class="relative w-full">
-                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Buscar posts, juegos, películas..." 
-                        class="w-full pl-3 pr-8 py-2 text-xs bg-white text-gray-800 rounded-md border border-blue-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-md">
-                    <i class="fas fa-search absolute right-2.5 top-2.5 text-gray-400 text-xs"></i>
-                </div>
+            <div class="mt-4 md:mt-0 relative w-full md:w-80">
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Buscar posts, juegos, películas..." 
+                    class="w-full pl-3 pr-8 py-2 text-xs bg-white text-gray-800 rounded-md border border-gray-300 focus:outline-none shadow">
+                <i class="fas fa-search absolute right-3 top-2.5 text-gray-400 text-xs"></i>
             </div>
         </div>
     </header>
 
-    <!-- Forum Sub-navigation Bar -->
-    <div class="bg-white border-b border-gray-300 sticky-top-sub shadow-sm">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between text-xs font-bold text-gray-600 px-4">
-            <div class="flex space-x-1 sm:space-x-4">
-                <button onclick="showHomeView(); resetFilters();" class="py-2.5 px-3 hover:bg-gray-100 border-b-2 border-blue-600 text-blue-700 flex items-center">
-                    <i class="fas fa-home mr-1.5 text-blue-500"></i>Posts
+    <!-- Sub-navigation Tabs -->
+    <div class="max-w-7xl mx-auto w-full px-2">
+        <div class="bg-white border-x border-b border-gray-300 rounded-b p-1 flex flex-wrap items-center justify-between text-xs font-bold text-gray-700 shadow-md">
+            <div class="flex space-x-1">
+                <button onclick="showHomeView(); resetFilters();" class="py-1.5 px-3 bg-white text-blue-700 border-b-2 border-blue-600 flex items-center">
+                    <i class="fas fa-home mr-1.5 text-blue-600"></i>Posts
                 </button>
-                <button onclick="showHomeView(); showTops();" class="py-2.5 px-3 hover:bg-gray-100 flex items-center">
-                    <i class="fas fa-layer-group mr-1.5 text-yellow-600"></i>Tops
+                <button onclick="showHomeView();" class="py-1.5 px-3 hover:bg-gray-100 flex items-center">
+                    <i class="fas fa-comments mr-1.5 text-green-600"></i>Comunidades
+                </button>
+                <button onclick="showHomeView(); showTops();" class="py-1.5 px-3 hover:bg-gray-100 flex items-center">
+                    <i class="fas fa-trophy mr-1.5 text-yellow-600"></i>Tops
+                </button>
+                <button onclick="document.getElementById('searchInput').focus();" class="py-1.5 px-3 hover:bg-gray-100 flex items-center">
+                    <i class="fas fa-search mr-1.5 text-purple-600"></i>Buscador
                 </button>
             </div>
-            <div id="newPostBtnContainer" class="py-1">
-                <button onclick="showCreatePostView()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-1 px-3 rounded text-xs shadow flex items-center transition">
-                    <i class="fas fa-pen-square mr-1"></i> Publicar post
-                </button>
-            </div>
+            <button onclick="showCreatePostView()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1 px-3 rounded text-xs shadow flex items-center transition">
+                <i class="fas fa-plus-circle mr-1"></i> Crear Post
+            </button>
         </div>
     </div>
 
     <!-- MAIN HOME VIEW -->
-    <main id="homeView" class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 grid grid-cols-1 md:grid-cols-12 gap-4">
+    <main id="homeView" class="max-w-7xl mx-auto w-full flex-grow p-2 grid grid-cols-1 md:grid-cols-12 gap-3 mt-1">
         <!-- LEFT COLUMN: Ultimos Posts -->
-        <section class="md:col-span-6 lg:col-span-5 flex flex-col space-y-3">
-            <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden">
-                <div class="forum-header-bar px-3 py-2 border-b border-forum flex justify-between items-center">
-                    <h2 class="font-bold text-blue-900 text-sm flex items-center">
-                        <i class="fas fa-list-alt mr-2 text-blue-600"></i>Últimos Posts
+        <section class="md:col-span-5 flex flex-col space-y-3">
+            <div class="bg-white rounded border-forum-card shadow-sm overflow-hidden">
+                <div class="forum-header-bar px-3 py-2 flex justify-between items-center">
+                    <h2 class="font-bold text-blue-900 text-xs flex items-center">
+                        <i class="fas fa-list mr-2 text-blue-600"></i>Últimos Posts
                     </h2>
-                    <select id="categorySelectFilter" onchange="filterByCategory(this.value)" class="text-xs border border-gray-300 rounded px-1.5 py-0.5 bg-white text-gray-700 focus:outline-none">
+                    <select id="categorySelectFilter" onchange="filterByCategory(this.value)" class="text-xs border border-gray-300 rounded px-1 py-0.5 bg-white text-gray-700 focus:outline-none">
                         <option value="ALL">Todas las categorías</option>
                         <option value="Películas">Películas</option>
                         <option value="Series">Series</option>
@@ -136,37 +131,56 @@
                     </select>
                 </div>
                 
-                <div id="postsList" class="divide-y divide-gray-100 text-xs max-h-[700px] overflow-y-auto">
+                <!-- Anuncio destacado estilo Identi -->
+                <div class="bg-amber-50 border-b border-amber-200 p-2.5 text-xs">
+                    <div class="font-bold text-red-600 flex items-center">
+                        <i class="fas fa-bullhorn mr-1.5"></i> [Anuncio] Actualización de Servidores
+                    </div>
+                    <p class="text-gray-600 text-3xs mt-0.5">Recordatorio: Revisa las normas de la comunidad antes de publicar enlaces.</p>
+                </div>
+
+                <div id="postsList" class="divide-y divide-gray-100 text-xs min-h-[400px]">
                     <div class="p-4 text-center text-gray-500">Cargando publicaciones...</div>
                 </div>
             </div>
         </section>
 
         <!-- MIDDLE COLUMN: Statistics & Comments -->
-        <section class="md:col-span-6 lg:col-span-4 flex flex-col space-y-3">
-            <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden">
-                <div class="forum-header-bar px-3 py-2 border-b border-forum">
-                    <h3 class="font-bold text-blue-900 text-sm flex items-center">
-                        <i class="fas fa-chart-bar mr-2 text-blue-600"></i>Estadísticas
+        <section class="md:col-span-4 flex flex-col space-y-3">
+            <!-- Estadísticas cuadrícula de 4 -->
+            <div class="bg-white rounded border-forum-card shadow-sm overflow-hidden">
+                <div class="forum-header-bar px-3 py-2">
+                    <h3 class="font-bold text-blue-900 text-xs flex items-center">
+                        <i class="fas fa-chart-line mr-2 text-blue-600"></i>Estadísticas
                     </h3>
                 </div>
-                <div class="p-3 grid grid-cols-2 gap-3 text-xs">
-                    <div class="bg-blue-50 p-2 rounded border border-blue-100">
-                        <span class="text-blue-800 font-bold block text-sm" id="statOnline">20,408</span>
-                        <span class="text-gray-500 text-3xs uppercase font-semibold">Usuarios Online</span>
+                <div class="p-2.5 grid grid-cols-2 gap-2 text-xs">
+                    <div class="bg-blue-50/60 p-2 rounded border border-blue-100">
+                        <span class="text-blue-900 font-extrabold block text-sm" id="statOnline">20,408</span>
+                        <span class="text-gray-500 text-3xs uppercase font-bold">USUARIOS ONLINE</span>
                     </div>
-                    <div class="bg-blue-50 p-2 rounded border border-blue-100">
-                        <span class="text-blue-800 font-bold block text-sm" id="statPosts">0</span>
-                        <span class="text-gray-500 text-3xs uppercase font-semibold">Posts Publicados</span>
+                    <div class="bg-blue-50/60 p-2 rounded border border-blue-100">
+                        <span class="text-blue-900 font-extrabold block text-sm" id="statPosts">695,136</span>
+                        <span class="text-gray-500 text-3xs uppercase font-bold">POSTS PUBLICADOS</span>
+                    </div>
+                    <div class="bg-blue-50/60 p-2 rounded border border-blue-100">
+                        <span class="text-blue-900 font-extrabold block text-sm">549,421</span>
+                        <span class="text-gray-500 text-3xs uppercase font-bold">MIEMBROS</span>
+                    </div>
+                    <div class="bg-blue-50/60 p-2 rounded border border-blue-100">
+                        <span class="text-blue-900 font-extrabold block text-sm">6,148,762</span>
+                        <span class="text-gray-500 text-3xs uppercase font-bold">COMENTARIOS</span>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden flex-grow">
-                <div class="forum-header-bar px-3 py-2 border-b border-forum flex justify-between items-center">
-                    <h3 class="font-bold text-blue-900 text-sm flex items-center">
+            <!-- Comentarios Recientes -->
+            <div class="bg-white rounded border-forum-card shadow-sm overflow-hidden flex-grow">
+                <div class="forum-header-bar px-3 py-2 flex justify-between items-center">
+                    <h3 class="font-bold text-blue-900 text-xs flex items-center">
                         <i class="fas fa-comments mr-2 text-blue-600"></i>Últimos Comentarios
                     </h3>
+                    <span class="text-3xs text-gray-500 font-semibold">En vivo</span>
                 </div>
                 <div id="commentsList" class="divide-y divide-gray-100 text-xs">
                     <div class="p-3 text-center text-gray-400">Sin comentarios recientes</div>
@@ -174,40 +188,58 @@
             </div>
         </section>
 
-        <!-- RIGHT SIDEBAR -->
-        <section class="md:col-span-12 lg:col-span-3 flex flex-col space-y-3">
-            <div class="bg-white rounded border border-forum box-shadow-retro overflow-hidden">
-                <div class="forum-header-bar px-3 py-2 border-b border-forum">
-                    <h3 class="font-bold text-blue-900 text-sm flex items-center">
-                        <i class="fas fa-folder-open mr-2 text-blue-600"></i>Categorías
+        <!-- RIGHT SIDEBAR: Categorías Populares -->
+        <section class="md:col-span-3 flex flex-col space-y-3">
+            <div class="bg-white rounded border-forum-card shadow-sm overflow-hidden">
+                <div class="forum-header-bar px-3 py-2">
+                    <h3 class="font-bold text-blue-900 text-xs flex items-center">
+                        <i class="fas fa-folder mr-2 text-blue-600"></i>Categorías Populares
                     </h3>
                 </div>
-                <div class="p-2 text-xs font-semibold uppercase tracking-wider space-y-1">
-                    <a href="#" onclick="filterByCategory('Películas')" class="block px-2 py-1.5 hover:bg-blue-50 text-blue-900 rounded">Películas</a>
-                    <a href="#" onclick="filterByCategory('Juegos PC')" class="block px-2 py-1.5 hover:bg-blue-50 text-blue-900 rounded">Juegos de PC</a>
-                    <a href="#" onclick="filterByCategory('Series')" class="block px-2 py-1.5 hover:bg-blue-50 text-blue-900 rounded">Series</a>
-                    <a href="#" onclick="filterByCategory('Software')" class="block px-2 py-1.5 hover:bg-blue-50 text-blue-900 rounded">Software</a>
+                <div class="p-1 text-xs font-bold divide-y divide-gray-100">
+                    <a href="#" onclick="filterByCategory('Películas')" class="flex justify-between items-center p-2 hover:bg-blue-50 text-blue-900">
+                        <span><i class="fas fa-film text-gray-400 mr-2"></i>PELÍCULAS EN ESPAÑOL</span>
+                        <span class="text-gray-400 font-normal">(42K)</span>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Juegos PC')" class="flex justify-between items-center p-2 hover:bg-blue-50 text-blue-900">
+                        <span><i class="fas fa-gamepad text-gray-400 mr-2"></i>JUEGOS DE PC</span>
+                        <span class="text-gray-400 font-normal">(31K)</span>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Series')" class="flex justify-between items-center p-2 hover:bg-blue-50 text-blue-900">
+                        <span><i class="fas fa-tv text-gray-400 mr-2"></i>SERIES EN ESPAÑOL</span>
+                        <span class="text-gray-400 font-normal">(18K)</span>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Software')" class="flex justify-between items-center p-2 hover:bg-blue-50 text-blue-900">
+                        <span><i class="fas fa-desktop text-gray-400 mr-2"></i>SOFTWARE | PROGRAMAS</span>
+                        <span class="text-gray-400 font-normal">(12K)</span>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Anime')" class="flex justify-between items-center p-2 hover:bg-blue-50 text-blue-900">
+                        <span><i class="fas fa-dragon text-gray-400 mr-2"></i>ANIME | MANGA</span>
+                        <span class="text-gray-400 font-normal">(9K)</span>
+                    </a>
+                    <a href="#" onclick="filterByCategory('Música')" class="flex justify-between items-center p-2 hover:bg-blue-50 text-blue-900">
+                        <span><i class="fas fa-music text-gray-400 mr-2"></i>DISCOS DE MÚSICA</span>
+                        <span class="text-gray-400 font-normal">(15K)</span>
+                    </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FULL PAGE POST VIEW (ESTILO IDENTI COMPLETO) -->
-    <main id="singlePostPage" class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 hidden grid-cols-1 md:grid-cols-12 gap-4">
-        <div class="md:col-span-9 bg-white border border-forum box-shadow-retro rounded overflow-hidden">
-            <!-- Header post -->
-            <div class="forum-header-bar p-4 border-b border-forum flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+    <!-- FULL PAGE POST VIEW (PANTALLA COMPLETA) -->
+    <main id="singlePostPage" class="max-w-7xl mx-auto w-full flex-grow p-2 hidden grid-cols-1 md:grid-cols-12 gap-3 mt-1">
+        <div class="md:col-span-9 bg-white border border-forum-card rounded shadow-sm overflow-hidden">
+            <div class="forum-header-bar p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                    <span id="fullPostCategory" class="bg-blue-800 text-white text-3xs font-bold px-2 py-0.5 rounded uppercase">Categoría</span>
+                    <span id="fullPostCategory" class="bg-blue-900 text-white text-3xs font-bold px-2 py-0.5 rounded uppercase">Categoría</span>
                     <h1 id="fullPostTitle" class="text-xl sm:text-2xl font-bold text-blue-900 mt-1"></h1>
                 </div>
                 <div id="fullPostAdminActions" class="hidden space-x-2 flex-shrink-0">
-                    <button onclick="editCurrentPost()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-3 py-1 rounded text-xs"><i class="fas fa-edit mr-1"></i>Editar</button>
+                    <button onclick="editCurrentPost()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1 rounded text-xs"><i class="fas fa-edit mr-1"></i>Editar</button>
                     <button onclick="deleteCurrentPost()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1 rounded text-xs"><i class="fas fa-trash mr-1"></i>Borrar</button>
                 </div>
             </div>
 
-            <!-- Meta Info Bar -->
             <div class="bg-gray-50 px-4 py-2 border-b border-gray-200 flex flex-wrap items-center justify-between text-xs text-gray-600">
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-user-circle text-blue-600 text-base"></i>
@@ -215,56 +247,52 @@
                     <span>•</span>
                     <span id="fullPostDate"></span>
                 </div>
-                <button id="fullUpvoteBtn" onclick="upvoteCurrentPost()" class="bg-green-100 hover:bg-green-200 text-green-800 font-bold px-3 py-1 rounded border border-green-300 flex items-center space-x-1.5 transition">
+                <button id="fullUpvoteBtn" onclick="upvoteCurrentPost()" class="bg-green-50 hover:bg-green-100 text-green-800 font-bold px-3 py-1 rounded border border-green-300 flex items-center space-x-1.5 transition">
                     <i class="fas fa-thumbs-up text-green-600"></i>
                     <span id="fullUpvotesCount">0</span>
                 </button>
             </div>
 
-            <!-- Body Content -->
             <div id="fullPostContent" class="p-5 post-content text-sm text-gray-800 leading-relaxed min-h-[250px] whitespace-pre-wrap"></div>
 
-            <!-- Section Comments -->
-            <div class="border-t border-forum bg-gray-50 p-4 space-y-4">
+            <div class="border-t border-gray-200 bg-gray-50 p-4 space-y-4">
                 <h3 class="font-bold text-blue-900 text-base border-b pb-2"><i class="fas fa-comments mr-2"></i>Comentarios</h3>
                 <div id="fullCommentsList" class="space-y-3"></div>
                 
                 <div class="pt-2">
                     <label class="block text-xs font-bold text-gray-700 mb-1">Deja tu comentario:</label>
                     <textarea id="fullCommentInput" rows="3" placeholder="Escribe tu comentario..." class="w-full border border-gray-300 rounded p-2 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"></textarea>
-                    <button onclick="submitComment()" class="mt-2 bg-blue-700 hover:bg-blue-800 text-white font-bold px-4 py-1.5 rounded text-xs shadow">
+                    <button onclick="submitComment()" class="mt-2 bg-blue-800 hover:bg-blue-900 text-white font-bold px-4 py-1.5 rounded text-xs shadow">
                         Publicar Comentario
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Sidebar derecha vista post -->
         <div class="md:col-span-3 space-y-3">
             <button onclick="showHomeView()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded text-xs border border-gray-300 flex items-center justify-center">
-                <i class="fas fa-arrow-left mr-2"></i> Volver a los posts
+                <i class="fas fa-arrow-left mr-2"></i> Volver a la portada
             </button>
         </div>
     </main>
 
     <!-- CREATE / EDIT POST PAGE VIEW -->
-    <main id="createPostPage" class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 hidden grid-cols-1 md:grid-cols-12 gap-4">
-        <div class="md:col-span-8 bg-white border border-forum box-shadow-retro p-4 rounded text-xs space-y-4">
-            <h2 class="text-xl font-bold text-blue-900 border-b pb-2">Comparte un post en identi...</h2>
+    <main id="createPostPage" class="max-w-7xl mx-auto w-full flex-grow p-2 hidden grid-cols-1 md:grid-cols-12 gap-3 mt-1">
+        <div class="md:col-span-8 bg-white border border-forum-card p-4 rounded text-xs space-y-4">
+            <h2 class="text-xl font-bold text-blue-900 border-b pb-2">Publicar contenido en IDENTI</h2>
             
             <div>
                 <label class="block font-bold text-gray-700 mb-1">Título del post...</label>
-                <input type="text" id="editorTitle" placeholder="Escribe el título aquí..." class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-inner">
+                <input type="text" id="editorTitle" placeholder="Ej: Las Mejores Películas (2026) Latino Online 4K" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
             </div>
 
-            <!-- Toolbar BBCode Buttons -->
             <div class="bg-gray-100 p-2 rounded border border-gray-300 flex flex-wrap gap-1">
-                <button onclick="insertBBCode('[b]', '[/b]')" class="px-2 py-1 bg-white border rounded font-bold hover:bg-gray-50" title="Negrita">B</button>
-                <button onclick="insertBBCode('[i]', '[/i]')" class="px-2 py-1 bg-white border rounded italic hover:bg-gray-50" title="Cursiva">I</button>
-                <button onclick="insertBBCode('[u]', '[/u]')" class="px-2 py-1 bg-white border rounded underline hover:bg-gray-50" title="Subrayado">U</button>
+                <button onclick="insertBBCode('[b]', '[/b]')" class="px-2 py-1 bg-white border rounded font-bold hover:bg-gray-50">B</button>
+                <button onclick="insertBBCode('[i]', '[/i]')" class="px-2 py-1 bg-white border rounded italic hover:bg-gray-50">I</button>
+                <button onclick="insertBBCode('[u]', '[/u]')" class="px-2 py-1 bg-white border rounded underline hover:bg-gray-50">U</button>
                 <span class="border-r border-gray-300 mx-1"></span>
-                <button onclick="insertBBCode('[img]', '[/img]')" class="px-2 py-1 bg-white border rounded text-blue-600 hover:bg-gray-50 font-bold" title="Insertar Imagen"><i class="fas fa-image mr-1"></i>Imagen</button>
-                <button onclick="insertBBCode('[url=]', '[/url]')" class="px-2 py-1 bg-white border rounded text-blue-600 hover:bg-gray-50 font-bold" title="Insertar Link"><i class="fas fa-link mr-1"></i>Enlace</button>
+                <button onclick="insertBBCode('[img]', '[/img]')" class="px-2 py-1 bg-white border rounded text-blue-600 hover:bg-gray-50 font-bold"><i class="fas fa-image mr-1"></i>Imagen</button>
+                <button onclick="insertBBCode('[url=]', '[/url]')" class="px-2 py-1 bg-white border rounded text-blue-600 hover:bg-gray-50 font-bold"><i class="fas fa-link mr-1"></i>Enlace</button>
             </div>
 
             <textarea id="editorContent" rows="12" placeholder="Escribe el contenido de tu post aquí..." class="w-full border border-gray-300 rounded p-3 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono"></textarea>
@@ -285,7 +313,7 @@
                     <span class="block font-bold text-gray-700 mb-1">Opciones:</span>
                     <label class="flex items-center space-x-2 text-xs">
                         <input type="checkbox" id="optionCenter" class="rounded">
-                        <span>Forzar centrado del contenido</span>
+                        <span>Forzar centrado del texto e imágenes</span>
                     </label>
                 </div>
             </div>
@@ -295,7 +323,7 @@
                     <i class="fas fa-eye mr-1.5"></i> Previsualizar
                 </button>
                 <button id="btnSaveEditor" onclick="saveEditorPost()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded text-xs shadow flex items-center">
-                    <i class="fas fa-save mr-1.5"></i> Publicar / Guardar
+                    <i class="fas fa-save mr-1.5"></i> Publicar Post
                 </button>
                 <button onclick="showHomeView()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-3 py-2 rounded text-xs">
                     Cancelar
@@ -312,21 +340,18 @@
         </div>
 
         <div class="md:col-span-4 space-y-3">
-            <div class="bg-white border border-forum box-shadow-retro p-3 rounded text-xs">
-                <h3 class="font-bold text-blue-900 border-b pb-1 mb-2 text-sm">Importante, leer...</h3>
-                <p class="font-bold text-gray-700 mb-1">Para un mejor post:</p>
+            <div class="bg-white border border-forum-card p-3 rounded text-xs">
+                <h3 class="font-bold text-blue-900 border-b pb-1 mb-2 text-sm">Reglas de publicación</h3>
                 <ul class="space-y-1 text-gray-600 text-3xs">
-                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Un título descriptivo y claro.</li>
-                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Contenido con abundante información.</li>
-                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Usar imágenes y enlaces limpios.</li>
-                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Escribir sin faltas de ortografía.</li>
+                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Un título claro y descriptivo.</li>
+                    <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Enlaces funcionando y sin acortadores.</li>
                 </ul>
             </div>
         </div>
     </main>
 
-    <!-- LOGIN MODAL -->
-    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
+    <!-- MODALS -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-3">
         <div class="bg-white rounded-lg shadow-xl max-w-xs w-full p-4 border border-gray-400">
             <div class="flex justify-between items-center border-b pb-2 mb-3">
                 <h3 class="font-bold text-blue-900 text-sm"><i class="fas fa-sign-in-alt mr-1"></i> Iniciar Sesión</h3>
@@ -337,13 +362,12 @@
                     <label class="block font-bold text-gray-700 mb-1">Usuario</label>
                     <input type="text" id="loginUser" required placeholder="Tu nick" class="w-full border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none">
                 </div>
-                <button type="submit" class="w-full py-1.5 bg-blue-700 text-white rounded font-bold">Ingresar</button>
+                <button type="submit" class="w-full py-1.5 bg-blue-800 text-white rounded font-bold">Ingresar</button>
             </form>
         </div>
     </div>
 
-    <!-- REGISTER MODAL -->
-    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-3">
         <div class="bg-white rounded-lg shadow-xl max-w-xs w-full p-4 border border-gray-400">
             <div class="flex justify-between items-center border-b pb-2 mb-3">
                 <h3 class="font-bold text-blue-900 text-sm"><i class="fas fa-user-plus mr-1"></i> Registro</h3>
@@ -359,7 +383,7 @@
         </div>
     </div>
 
-    <!-- Supabase Logic Script -->
+    <!-- Supabase JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = 'https://fueuwjkccdbglmuwvkwt.supabase.co';
@@ -426,8 +450,7 @@
             const end = textarea.selectionEnd;
             const text = textarea.value;
             const selectedText = text.substring(start, end);
-            const replacement = startTag + selectedText + endTag;
-            textarea.value = text.substring(0, start) + replacement + text.substring(end);
+            textarea.value = text.substring(0, start) + startTag + selectedText + endTag + text.substring(end);
             textarea.focus();
         }
 
@@ -446,11 +469,8 @@
             const previewBody = document.getElementById('previewBody');
             previewBody.innerHTML = parseBBCode(content);
 
-            if (isCentered) {
-                previewBody.classList.add('center-text');
-            } else {
-                previewBody.classList.remove('center-text');
-            }
+            if (isCentered) previewBody.classList.add('center-text');
+            else previewBody.classList.remove('center-text');
 
             previewBox.classList.remove('hidden');
             previewBox.scrollIntoView({ behavior: 'smooth' });
@@ -483,10 +503,10 @@
                 await fetchPosts(selectedCategory);
                 await fetchStats();
             } catch (err) {
-                alert("Error al guardar en Supabase: " + err.message);
+                alert("Error en Supabase: " + err.message);
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-save mr-1.5"></i> Publicar / Guardar';
+                btn.innerHTML = '<i class="fas fa-save mr-1.5"></i> Publicar Post';
             }
         }
 
@@ -510,20 +530,21 @@
             }
 
             container.innerHTML = posts.map(post => `
-                <div onclick="openPostView('${post.id}')" class="p-2.5 hover:bg-blue-50 cursor-pointer transition flex items-start justify-between group">
+                <div onclick="openPostView('${post.id}')" class="p-2 hover:bg-blue-50 cursor-pointer transition flex items-center justify-between group border-b border-gray-100">
                     <div class="flex items-center space-x-2.5 overflow-hidden">
                         <i class="${getCategoryIcon(post.category)} text-blue-600 text-sm flex-shrink-0"></i>
                         <div class="truncate">
-                            <span class="font-bold text-blue-900 group-hover:underline">${post.title}</span>
-                            <div class="text-3xs text-gray-500 mt-0.5 flex space-x-2">
-                                <span class="font-semibold text-gray-700">${post.category}</span>
+                            <span class="font-bold text-blue-900 group-hover:underline text-xs block truncate">${post.title}</span>
+                            <div class="text-3xs text-gray-500 mt-0.5 flex space-x-1.5">
+                                <span class="font-bold text-gray-700">${post.category}</span>
                                 <span>•</span>
                                 <span>por ${post.author || 'Anónimo'}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-2 ml-2 flex-shrink-0 text-3xs text-gray-500">
-                        <span class="bg-gray-100 px-1.5 py-0.5 rounded border"><i class="fas fa-thumbs-up text-green-600 mr-0.5"></i>${post.upvotes || 0}</span>
+                    <div class="flex items-center space-x-1.5 ml-2 flex-shrink-0 text-3xs">
+                        <span class="bg-gray-100 text-green-700 font-bold px-1.5 py-0.5 rounded border border-gray-200"><i class="fas fa-thumbs-up text-green-600 mr-1"></i>${post.upvotes || 0}</span>
+                        <span class="bg-blue-50 text-blue-700 font-bold px-1.5 py-0.5 rounded border border-blue-100"><i class="fas fa-comment text-blue-500 mr-1"></i>0</span>
                     </div>
                 </div>
             `).join('');
@@ -559,7 +580,7 @@
                 commentsContainer.innerHTML = `<div class="text-gray-500 italic text-xs p-2">No hay comentarios aún. ¡Sé el primero en comentar!</div>`;
             } else {
                 commentsContainer.innerHTML = comments.map(c => `
-                    <div class="bg-white p-3 rounded border border-gray-200 shadow-sm">
+                    <div class="bg-white p-2.5 rounded border border-gray-200 shadow-sm">
                         <div class="font-bold text-blue-900 text-xs flex justify-between">
                             <span><i class="fas fa-user text-gray-400 mr-1"></i>${c.user}</span>
                         </div>
@@ -570,11 +591,11 @@
         }
 
         async function fetchRecentComments() {
-            const { data } = await _supabase.from('comments').select('*').order('created_at', { ascending: false }).limit(5);
-            if (data) {
+            const { data } = await _supabase.from('comments').select('*').order('created_at', { ascending: false }).limit(4);
+            if (data && data.length > 0) {
                 document.getElementById('commentsList').innerHTML = data.map(c => `
                     <div class="p-2 hover:bg-gray-50">
-                        <div class="font-bold text-blue-800 text-2xs">${c.user}</div>
+                        <div class="font-bold text-blue-900 text-2xs">${c.user}</div>
                         <div class="text-gray-600 text-3xs truncate">${c.text}</div>
                     </div>
                 `).join('');
@@ -588,14 +609,13 @@
 
         function parseBBCode(text) {
             if (!text) return '';
-            let formatted = text
+            return text
                 .replace(/\[b\](.*?)\[\/b\]/gi, '<strong>$1</strong>')
                 .replace(/\[i\](.*?)\[\/i\]/gi, '<em>$1</em>')
                 .replace(/\[u\](.*?)\[\/u\]/gi, '<span class="underline">$1</span>')
                 .replace(/\[img\](.*?)\[\/img\]/gi, '<img src="$1" alt="Imagen post">')
                 .replace(/\[url=(.*?)\](.*?)\[\/url\]/gi, '<a href="$1" target="_blank" class="text-blue-600 underline font-bold">$2</a>')
                 .replace(/(https?:\/\/[^\s]+(?:\.png|\.jpg|\.jpeg|\.gif))/gi, '<img src="$1" alt="Imagen">');
-            return formatted;
         }
 
         function editCurrentPost() {
@@ -667,7 +687,6 @@
                 document.getElementById('userNavProfile').classList.remove('hidden');
                 document.getElementById('userNavProfile').classList.add('flex');
                 document.getElementById('usernameDisplay').innerText = currentUser;
-                document.getElementById('createPostNavBtn').classList.remove('hidden');
 
                 if (currentUser.toLowerCase() === 'gustavox10') {
                     document.getElementById('userRankBadge').innerText = 'Rango: ADMIN';
@@ -676,7 +695,6 @@
             } else {
                 document.getElementById('authNavButtons').classList.remove('hidden');
                 document.getElementById('userNavProfile').classList.add('hidden');
-                document.getElementById('createPostNavBtn').classList.add('hidden');
             }
         }
 
