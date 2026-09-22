@@ -40,7 +40,7 @@
             max-width: 100%;
             height: auto;
             border-radius: 4px;
-            margin: 10px auto;
+            margin: 12px auto;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             display: block;
         }
@@ -192,9 +192,63 @@
         </section>
     </main>
 
-    <!-- IDENTI CREATE / EDIT POST PAGE VIEW -->
+    <!-- FULL PAGE POST VIEW (ESTILO IDENTI COMPLETO) -->
+    <main id="singlePostPage" class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 hidden grid-cols-1 md:grid-cols-12 gap-4">
+        <div class="md:col-span-9 bg-white border border-forum box-shadow-retro rounded overflow-hidden">
+            <!-- Header post -->
+            <div class="forum-header-bar p-4 border-b border-forum flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <span id="fullPostCategory" class="bg-blue-800 text-white text-3xs font-bold px-2 py-0.5 rounded uppercase">Categoría</span>
+                    <h1 id="fullPostTitle" class="text-xl sm:text-2xl font-bold text-blue-900 mt-1"></h1>
+                </div>
+                <div id="fullPostAdminActions" class="hidden space-x-2 flex-shrink-0">
+                    <button onclick="editCurrentPost()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-3 py-1 rounded text-xs"><i class="fas fa-edit mr-1"></i>Editar</button>
+                    <button onclick="deleteCurrentPost()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1 rounded text-xs"><i class="fas fa-trash mr-1"></i>Borrar</button>
+                </div>
+            </div>
+
+            <!-- Meta Info Bar -->
+            <div class="bg-gray-50 px-4 py-2 border-b border-gray-200 flex flex-wrap items-center justify-between text-xs text-gray-600">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-user-circle text-blue-600 text-base"></i>
+                    <span id="fullPostAuthor" class="font-bold text-gray-800"></span>
+                    <span>•</span>
+                    <span id="fullPostDate"></span>
+                </div>
+                <button id="fullUpvoteBtn" onclick="upvoteCurrentPost()" class="bg-green-100 hover:bg-green-200 text-green-800 font-bold px-3 py-1 rounded border border-green-300 flex items-center space-x-1.5 transition">
+                    <i class="fas fa-thumbs-up text-green-600"></i>
+                    <span id="fullUpvotesCount">0</span>
+                </button>
+            </div>
+
+            <!-- Body Content -->
+            <div id="fullPostContent" class="p-5 post-content text-sm text-gray-800 leading-relaxed min-h-[250px] whitespace-pre-wrap"></div>
+
+            <!-- Section Comments -->
+            <div class="border-t border-forum bg-gray-50 p-4 space-y-4">
+                <h3 class="font-bold text-blue-900 text-base border-b pb-2"><i class="fas fa-comments mr-2"></i>Comentarios</h3>
+                <div id="fullCommentsList" class="space-y-3"></div>
+                
+                <div class="pt-2">
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Deja tu comentario:</label>
+                    <textarea id="fullCommentInput" rows="3" placeholder="Escribe tu comentario..." class="w-full border border-gray-300 rounded p-2 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 bg-white"></textarea>
+                    <button onclick="submitComment()" class="mt-2 bg-blue-700 hover:bg-blue-800 text-white font-bold px-4 py-1.5 rounded text-xs shadow">
+                        Publicar Comentario
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar derecha vista post -->
+        <div class="md:col-span-3 space-y-3">
+            <button onclick="showHomeView()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded text-xs border border-gray-300 flex items-center justify-center">
+                <i class="fas fa-arrow-left mr-2"></i> Volver a los posts
+            </button>
+        </div>
+    </main>
+
+    <!-- CREATE / EDIT POST PAGE VIEW -->
     <main id="createPostPage" class="max-w-7xl mx-auto w-full flex-grow p-3 sm:p-4 hidden grid-cols-1 md:grid-cols-12 gap-4">
-        <!-- Editor Left Area -->
         <div class="md:col-span-8 bg-white border border-forum box-shadow-retro p-4 rounded text-xs space-y-4">
             <h2 class="text-xl font-bold text-blue-900 border-b pb-2">Comparte un post en identi...</h2>
             
@@ -213,10 +267,8 @@
                 <button onclick="insertBBCode('[url=]', '[/url]')" class="px-2 py-1 bg-white border rounded text-blue-600 hover:bg-gray-50 font-bold" title="Insertar Link"><i class="fas fa-link mr-1"></i>Enlace</button>
             </div>
 
-            <!-- Textarea -->
             <textarea id="editorContent" rows="12" placeholder="Escribe el contenido de tu post aquí..." class="w-full border border-gray-300 rounded p-3 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono"></textarea>
 
-            <!-- Category & Options -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t pt-3">
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">Categoría:</label>
@@ -238,7 +290,6 @@
                 </div>
             </div>
 
-            <!-- Action Buttons (PREVISUALIZAR / GUARDAR) -->
             <div class="flex space-x-3 pt-3 border-t">
                 <button onclick="previewPost()" class="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded text-xs shadow flex items-center">
                     <i class="fas fa-eye mr-1.5"></i> Previsualizar
@@ -251,7 +302,6 @@
                 </button>
             </div>
 
-            <!-- Preview Container Box -->
             <div id="previewContainer" class="hidden border-2 border-dashed border-green-500 p-4 rounded bg-white mt-4 space-y-3">
                 <div class="bg-green-100 text-green-800 text-3xs font-bold px-2 py-1 rounded w-max uppercase">
                     Vista Previa del Post
@@ -261,7 +311,6 @@
             </div>
         </div>
 
-        <!-- Right Instructions Box -->
         <div class="md:col-span-4 space-y-3">
             <div class="bg-white border border-forum box-shadow-retro p-3 rounded text-xs">
                 <h3 class="font-bold text-blue-900 border-b pb-1 mb-2 text-sm">Importante, leer...</h3>
@@ -272,62 +321,9 @@
                     <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Usar imágenes y enlaces limpios.</li>
                     <li class="flex items-center text-green-700"><i class="fas fa-check mr-1.5"></i> Escribir sin faltas de ortografía.</li>
                 </ul>
-
-                <p class="font-bold text-red-700 mt-3 mb-1">No se permite:</p>
-                <ul class="space-y-1 text-gray-600 text-3xs">
-                    <li class="flex items-center text-red-600"><i class="fas fa-times mr-1.5"></i> Títulos EN MAYÚSCULAS o exagerados.</li>
-                    <li class="flex items-center text-red-600"><i class="fas fa-times mr-1.5"></i> Enlaces con acortadores o publicidad.</li>
-                    <li class="flex items-center text-red-600"><i class="fas fa-times mr-1.5"></i> Contenido de baja calidad o vacío.</li>
-                </ul>
             </div>
         </div>
     </main>
-
-    <!-- POST DETAILS MODAL -->
-    <div id="postViewModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
-        <div class="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-gray-400">
-            <div class="forum-header-bar px-4 py-3 border-b border-gray-300 flex justify-between items-center">
-                <span id="modalCategoryBadge" class="bg-blue-800 text-white text-3xs font-bold px-2 py-0.5 rounded uppercase">Categoría</span>
-                <button onclick="closeModal('postViewModal')" class="text-gray-500 hover:text-gray-800 text-lg font-bold">&times;</button>
-            </div>
-            <div class="p-4 overflow-y-auto space-y-4 text-xs">
-                <div class="flex justify-between items-start">
-                    <h2 id="modalPostTitle" class="text-lg font-bold text-blue-900"></h2>
-                    <div id="adminActions" class="hidden space-x-1">
-                        <button onclick="editCurrentPost()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-2 py-1 rounded text-3xs"><i class="fas fa-edit mr-1"></i>Editar</button>
-                        <button onclick="deleteCurrentPost()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded text-3xs"><i class="fas fa-trash mr-1"></i>Borrar</button>
-                    </div>
-                </div>
-                
-                <div class="flex items-center justify-between text-gray-500 border-b border-gray-200 pb-2">
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-user-circle text-lg text-blue-600"></i>
-                        <span id="modalPostAuthor" class="font-bold text-gray-800"></span>
-                        <span>•</span>
-                        <span id="modalPostDate"></span>
-                    </div>
-                    <button id="upvoteBtn" onclick="upvoteCurrentPost()" class="bg-green-100 text-green-700 hover:bg-green-200 font-bold px-2.5 py-1 rounded border border-green-300 flex items-center space-x-1">
-                        <i class="fas fa-thumbs-up"></i>
-                        <span id="modalUpvotesCount">0</span>
-                    </button>
-                </div>
-
-                <!-- Content Area -->
-                <div id="modalPostContent" class="post-content text-gray-800 space-y-2 leading-relaxed bg-gray-50 p-3 rounded border border-gray-200 min-h-[100px] whitespace-pre-wrap">
-                </div>
-
-                <!-- Comments Section -->
-                <div class="border-t border-gray-200 pt-3 space-y-3">
-                    <h4 class="font-bold text-gray-800 text-sm">Comentarios</h4>
-                    <div id="modalCommentsList" class="space-y-2 max-h-48 overflow-y-auto"></div>
-                    <div class="flex space-x-2 pt-2">
-                        <input type="text" id="newCommentInput" placeholder="Escribe un comentario..." class="flex-grow text-xs border border-gray-300 rounded px-2.5 py-1.5 focus:outline-none">
-                        <button onclick="submitComment()" class="bg-blue-700 hover:bg-blue-800 text-white font-bold px-3 py-1.5 rounded text-xs">Comentar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- LOGIN MODAL -->
     <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-3">
@@ -383,11 +379,20 @@
             fetchStats();
         };
 
-        function showHomeView() {
-            document.getElementById('homeView').classList.remove('hidden');
-            document.getElementById('homeView').classList.add('grid');
+        function hideAllViews() {
+            document.getElementById('homeView').classList.add('hidden');
+            document.getElementById('homeView').classList.remove('grid');
             document.getElementById('createPostPage').classList.add('hidden');
             document.getElementById('createPostPage').classList.remove('grid');
+            document.getElementById('singlePostPage').classList.add('hidden');
+            document.getElementById('singlePostPage').classList.remove('grid');
+        }
+
+        function showHomeView() {
+            hideAllViews();
+            document.getElementById('homeView').classList.remove('hidden');
+            document.getElementById('homeView').classList.add('grid');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showCreatePostView(postToEdit = null) {
@@ -409,10 +414,10 @@
                 document.getElementById('previewContainer').classList.add('hidden');
             }
 
-            document.getElementById('homeView').classList.add('hidden');
-            document.getElementById('homeView').classList.remove('grid');
+            hideAllViews();
             document.getElementById('createPostPage').classList.remove('hidden');
             document.getElementById('createPostPage').classList.add('grid');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function insertBBCode(startTag, endTag) {
@@ -437,10 +442,8 @@
             }
 
             const previewBox = document.getElementById('previewContainer');
-            const previewTitle = document.getElementById('previewTitle');
+            document.getElementById('previewTitle').innerText = title;
             const previewBody = document.getElementById('previewBody');
-
-            previewTitle.innerText = title;
             previewBody.innerHTML = parseBBCode(content);
 
             if (isCentered) {
@@ -531,34 +534,39 @@
             if (!post) return;
 
             activePostId = post.id;
-            document.getElementById('modalCategoryBadge').innerText = post.category;
-            document.getElementById('modalPostTitle').innerText = post.title;
-            document.getElementById('modalPostAuthor').innerText = post.author || 'Anónimo';
-            document.getElementById('modalPostDate').innerText = new Date(post.created_at).toLocaleString();
-            document.getElementById('modalUpvotesCount').innerText = post.upvotes || 0;
-            document.getElementById('modalPostContent').innerHTML = parseBBCode(post.content);
+            document.getElementById('fullPostCategory').innerText = post.category;
+            document.getElementById('fullPostTitle').innerText = post.title;
+            document.getElementById('fullPostAuthor').innerText = post.author || 'Anónimo';
+            document.getElementById('fullPostDate').innerText = new Date(post.created_at).toLocaleString();
+            document.getElementById('fullUpvotesCount').innerText = post.upvotes || 0;
+            document.getElementById('fullPostContent').innerHTML = parseBBCode(post.content);
 
-            const adminBox = document.getElementById('adminActions');
+            const adminBox = document.getElementById('fullPostAdminActions');
             if (currentUser && (currentUser.toLowerCase() === 'gustavox10' || currentUser === post.author)) {
                 adminBox.classList.remove('hidden');
             } else {
                 adminBox.classList.add('hidden');
             }
 
+            hideAllViews();
+            document.getElementById('singlePostPage').classList.remove('hidden');
+            document.getElementById('singlePostPage').classList.add('grid');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
             const { data: comments } = await _supabase.from('comments').select('*').eq('post_id', id);
-            const commentsContainer = document.getElementById('modalCommentsList');
+            const commentsContainer = document.getElementById('fullCommentsList');
             if (!comments || comments.length === 0) {
-                commentsContainer.innerHTML = `<div class="text-gray-400 italic text-3xs">Sin comentarios.</div>`;
+                commentsContainer.innerHTML = `<div class="text-gray-500 italic text-xs p-2">No hay comentarios aún. ¡Sé el primero en comentar!</div>`;
             } else {
                 commentsContainer.innerHTML = comments.map(c => `
-                    <div class="bg-gray-100 p-2 rounded border border-gray-200">
-                        <div class="font-bold text-blue-900 text-3xs">${c.user}</div>
-                        <div class="text-gray-700 text-xs mt-0.5">${c.text}</div>
+                    <div class="bg-white p-3 rounded border border-gray-200 shadow-sm">
+                        <div class="font-bold text-blue-900 text-xs flex justify-between">
+                            <span><i class="fas fa-user text-gray-400 mr-1"></i>${c.user}</span>
+                        </div>
+                        <div class="text-gray-800 text-xs mt-1 leading-normal">${c.text}</div>
                     </div>
                 `).join('');
             }
-
-            openModal('postViewModal');
         }
 
         async function fetchRecentComments() {
@@ -592,14 +600,13 @@
 
         function editCurrentPost() {
             const post = posts.find(p => String(p.id) === String(activePostId));
-            closeModal('postViewModal');
             if (post) showCreatePostView(post);
         }
 
         async function deleteCurrentPost() {
             if (!confirm("¿Seguro que deseas eliminar este post?")) return;
             await _supabase.from('posts').delete().eq('id', activePostId);
-            closeModal('postViewModal');
+            showHomeView();
             fetchPosts(selectedCategory);
             fetchStats();
         }
@@ -609,14 +616,14 @@
             if (post) {
                 const newUpvotes = (post.upvotes || 0) + 1;
                 post.upvotes = newUpvotes;
-                document.getElementById('modalUpvotesCount').innerText = newUpvotes;
+                document.getElementById('fullUpvotesCount').innerText = newUpvotes;
                 await _supabase.from('posts').update({ upvotes: newUpvotes }).eq('id', activePostId);
                 fetchPosts(selectedCategory);
             }
         }
 
         async function submitComment() {
-            const input = document.getElementById('newCommentInput');
+            const input = document.getElementById('fullCommentInput');
             const text = input.value.trim();
             if (!text) return;
 
